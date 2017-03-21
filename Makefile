@@ -1,4 +1,5 @@
 # Makefile for the data structures project
+CXX := g++
 
 # Compile Output Directories
 LIB_DIR        := ./libraries
@@ -37,19 +38,19 @@ VPATH := $(BTREE)
 
 .PHONY: all
 all: $(BTREE_LIB)
-	$(CXX) main.cc -o $(MAIN) $(INCLUDE_FLAGS) -L$(LIB_DIR)
+	$(CXX) main.cc -o $(MAIN) $(INCLUDE_FLAGS) $(LIB_DIR)/btree.a
 
 .PHONY: clean
 clean:
-	@rm -rf $(EXECUTABLE_DIR)
+	@rm -rf $(LIB_DIR)
+	@rm -f  ./**/*.o
+	@rm -f $(MAIN)
 
 $(LIB_DIR):
 	@mkdir $@
 
-$(BTREE_LIB): btree/binary-tree.o
-	@echo $(BTREE)
-	@echo $(BTREE_OBJECTS)
-	$(AR) rvs $@ $^
+$(BTREE_LIB): btree/binary-tree.o $(LIB_DIR)
+	$(AR) -r $@ $<
 
 btree/binary-tree.o: binary-tree.cc
 	$(CXX) $(INCLUDE_FLAGS) -c $< -o $@
