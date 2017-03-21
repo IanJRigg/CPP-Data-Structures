@@ -1,7 +1,6 @@
 # Makefile for the data structures project
 
 # Compile Output Directories
-EXECUTABLE_DIR := ./executables
 LIB_DIR        := ./libraries
 
 # Library Source Directories
@@ -12,6 +11,12 @@ HASHTABLE      := ./hashtable
 QUEUE          := ./queue
 STACK          := ./stack
 
+RBTREE_LIB     := btree.a
+GRAPH_LIB      := graph.a
+HASHTABLE_LIB  := hashtable.a
+QUEUE_LIB      := queue.a
+STACK_LIB      := stack.a
+
 # Library Object Directories
 BTREE_OBJ      := $(BTREE)/.obj
 RBTREE_OBJ     := $(RBTREE)/.obj
@@ -20,7 +25,7 @@ HASHTABLE_OBJ  := $(HASHTABLE)/.obj
 QUEUE_OBJ      := $(QUEUE)/.obj
 STACK_OBJ      := $(STACK)/.obj
 
-MAIN      := $(EXECUTABLE_DIR)/main
+MAIN      := main
 BTREE_LIB := $(LIB_DIR)/btree.a
 
 BTREE_FILES   := $(shell find $(BTREE) -name "*.cc")
@@ -30,27 +35,21 @@ INCLUDE_FLAGS := -I$(BTREE)
 
 VPATH := $(BTREE)
 
-
 .PHONY: all
-all: $(LIBS) $(EXECUTABLE_DIR)
-	$(CXX) main.cc -o $(MAIN) $(INCLUDE_FLAGS)  -lbtree
+all: $(BTREE_LIB)
+	$(CXX) main.cc -o $(MAIN) $(INCLUDE_FLAGS) -L$(LIB_DIR)
 
 .PHONY: clean
 clean:
 	@rm -rf $(EXECUTABLE_DIR)
 
-
 $(LIB_DIR):
 	@mkdir $@
 
-
-
-$(BTREE): $(BTREE_OBJECTS)
+$(BTREE_LIB): btree/binary-tree.o
+	@echo $(BTREE)
+	@echo $(BTREE_OBJECTS)
 	$(AR) rvs $@ $^
 
-$(BTREE_LIB)/%.o: %.cc
-	$(CXX) -c $< $(INCLUDE_FLAGS) -o $@
-
-
-$(EXECUTABLE_DIR):
-	@mkdir $@
+btree/binary-tree.o: binary-tree.cc
+	$(CXX) $(INCLUDE_FLAGS) -c $< -o $@

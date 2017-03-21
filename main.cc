@@ -2,6 +2,6 @@
 
 int main(int argc, char ** argv)
 {
-    Binary::Tree tree;
+    // Binary::Tree tree;
     return 0;
 }
