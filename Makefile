@@ -46,11 +46,11 @@ clean:
 	@rm -f  ./**/*.o
 	@rm -f $(MAIN)
 
-$(LIB_DIR):
-	@mkdir $@
-
-$(BTREE_LIB): btree/binary-tree.o $(LIB_DIR)
+$(BTREE_LIB): $(BTREE_OBJECTS) $(LIB_DIR)
 	$(AR) -r $@ $<
 
-btree/binary-tree.o: binary-tree.cc
+$(BTREE)/%.o: %.cc
 	$(CXX) $(INCLUDE_FLAGS) -c $< -o $@
+
+$(LIB_DIR):
+	@mkdir $@
