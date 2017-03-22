@@ -1,8 +1,10 @@
+################################################################################
 # Makefile for the data structures project
-CXX := g++
 
 # Compile Output Directories
 LIB_DIR        := ./libraries
+
+MAIN           := main
 
 # Library Source Directories
 BTREE          := ./btree
@@ -12,6 +14,7 @@ HASHTABLE      := ./hashtable
 QUEUE          := ./queue
 STACK          := ./stack
 
+# Static Lib Files
 BTREE_LIB      := $(LIB_DIR)/btree.a
 RBTREE_LIB     := $(LIB_DIR)/rbtree.a
 GRAPH_LIB      := $(LIB_DIR)/graph.a
@@ -27,31 +30,51 @@ HASHTABLE_OBJ  := $(HASHTABLE)/.obj
 QUEUE_OBJ      := $(QUEUE)/.obj
 STACK_OBJ      := $(STACK)/.obj
 
-MAIN      := main
-BTREE_LIB := $(LIB_DIR)/btree.a
+# 
 
-BTREE_FILES   := $(shell find $(BTREE) -name "*.cc")
-BTREE_OBJECTS := $(addsuffix .o, $(basename $(BTREE_FILES)))
+INCLUDE_FLAGS  := -Wall -Wextra -Werror -fstack-protector-all -std=c++11 -O3
 
-INCLUDE_FLAGS := -I$(BTREE)
+MAIN_INCLUDE_FLAGS := $(INCLUDE_FLAGS) -I$(BTREE)
 
 VPATH := $(BTREE)
 
+
+
+################################################################################
+# Generic GNU Make Targets
+
 .PHONY: all
 all: $(BTREE_LIB)
-	$(CXX) main.cc -o $(MAIN) $(INCLUDE_FLAGS) $(BTREE_LIB)
+	$(CXX) main.cc -o $(MAIN) $(MAIN_INCLUDE_FLAGS) $(BTREE_LIB)
 
 .PHONY: clean
 clean:
 	@rm -rf $(LIB_DIR)
 	@rm -f  ./**/*.o
-	@rm -f $(MAIN)
+	@rm -f  $(MAIN)
+
+
+
+################################################################################
+# Binary Tree Compilation
+
+# Binary Tree Constants
+BTREE_FILES         := $(shell find $(BTREE) -name "*.cc")
+BTREE_OBJECTS       := $(addsuffix .o, $(basename $(BTREE_FILES)))
+BTREE_INCLUDE_FLAGS := $(INCLUDE_FLAGS) -I$(BTREE)
 
 $(BTREE_LIB): $(BTREE_OBJECTS) $(LIB_DIR)
 	$(AR) -r $@ $<
 
 $(BTREE)/%.o: %.cc
-	$(CXX) $(INCLUDE_FLAGS) -c $< -o $@
+	$(CXX) $(BTREE_INCLUDE_FLAGS) -c $< -o $@
+
+
+
+
+
+################################################################################
+# Miscelaneous directory rules
 
 $(LIB_DIR):
 	@mkdir $@
