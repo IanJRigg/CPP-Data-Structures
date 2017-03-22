@@ -12,11 +12,12 @@ HASHTABLE      := ./hashtable
 QUEUE          := ./queue
 STACK          := ./stack
 
-RBTREE_LIB     := btree.a
-GRAPH_LIB      := graph.a
-HASHTABLE_LIB  := hashtable.a
-QUEUE_LIB      := queue.a
-STACK_LIB      := stack.a
+BTREE_LIB      := $(LIB_DIR)/btree.a
+RBTREE_LIB     := $(LIB_DIR)/rbtree.a
+GRAPH_LIB      := $(LIB_DIR)/graph.a
+HASHTABLE_LIB  := $(LIB_DIR)/hashtable.a
+QUEUE_LIB      := $(LIB_DIR)/queue.a
+STACK_LIB      := $(LIB_DIR)/stack.a
 
 # Library Object Directories
 BTREE_OBJ      := $(BTREE)/.obj
@@ -38,7 +39,7 @@ VPATH := $(BTREE)
 
 .PHONY: all
 all: $(BTREE_LIB)
-	$(CXX) main.cc -o $(MAIN) $(INCLUDE_FLAGS) $(LIB_DIR)/btree.a
+	$(CXX) main.cc -o $(MAIN) $(INCLUDE_FLAGS) $(BTREE_LIB)
 
 .PHONY: clean
 clean:
