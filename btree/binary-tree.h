@@ -10,7 +10,8 @@ namespace Binary
     class Tree
     {
         public:
-            Tree()
+            Tree() :
+                root()
             {
                 std::cout << "Hello from the Binary Tree Constructor!" << std::endl;
             }
