@@ -5,11 +5,15 @@
 
 namespace Binary
 {
-    template<class T>
+    template<typename K, typename V>
     class Node
     {
         public:
-            Node()
+            Node(K _k, V _v) :
+                key(_k),
+                value(_v),
+                lNode(),
+                rNode()
             {
                 std::cout << "In the Node constructor" << std::endl;
             }
@@ -17,9 +21,29 @@ namespace Binary
             ~Node()
             {
                 std::cout << "In the Node destructor" << std::endl;
+
+                delete lNode;
+                delete rNode;
+            }
+
+            void setLeftNode(Node<K, V> node)
+            {
+                delete lNode;
+                lNode = node;
+            }
+
+            void setRightNode(Node<K, V> node)
+            {
+                delete rNode;
+                rNode = node;
             }
 
         private:
+            K key;
+            V value;
+
+            Node<K, V> * lNode;
+            Node<K, V> * rNode;
 
     };
 };

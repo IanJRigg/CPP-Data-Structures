@@ -6,12 +6,12 @@
 
 namespace Binary
 {
-    template <typename T>
+    template <typename K, typename V>
     class Tree
     {
         public:
             Tree() :
-                root()
+                root(NULL)
             {
                 std::cout << "Hello from the Binary Tree Constructor!" << std::endl;
             }
@@ -21,8 +21,15 @@ namespace Binary
                 std::cout << "Hello from the Binary Tree Destructor!"  << std::endl;
             }
 
+            // Insert
+            // Remove
+            // Find
+            // Balance
+            // Values
+            // Keys
+
         private:
-            Node<T> root;
+            Node<K, V> * root;
 
     };
 };

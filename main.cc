@@ -13,6 +13,6 @@ int main(int argc, char ** argv)
         return 0UL;
     }
 
-    Binary::Tree<int> tree;
+    Binary::Tree<int, int> tree;
     return 0;
 }
