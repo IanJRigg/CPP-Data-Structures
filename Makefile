@@ -13,6 +13,7 @@ GRAPH          := ./graph
 HASHTABLE      := ./hashtable
 QUEUE          := ./queue
 STACK          := ./stack
+LLIST          := ./llist
 
 # Library Object Directories
 BTREE_OBJ      := $(BTREE)/.obj
@@ -24,7 +25,7 @@ STACK_OBJ      := $(STACK)/.obj
 
 INCLUDE_FLAGS  := -Wall -Wextra -Werror -fstack-protector-all -std=c++11 -O3
 
-MAIN_INCLUDE_FLAGS := $(INCLUDE_FLAGS) -I$(BTREE)
+MAIN_INCLUDE_FLAGS := $(INCLUDE_FLAGS) -I./ -I$(BTREE) -I$(LLIST)
 
 VPATH := $(BTREE)
 
