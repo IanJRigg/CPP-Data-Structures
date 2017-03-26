@@ -1,18 +1,36 @@
 #ifndef _LLIST_H_
 #define _LLIST_H_
 
+// STL Headers
+
+// Project Headers
 #include <uni-node.h>
 
 /*
     Doubly Linked List
+    STL types and other notes adapted from:
+        https://accu.org/index.php/journals/389
 */
 
 namespace Linked
 {
-    // TODO: Implement ++, -- operators
+    // TODO: Implement ++, --, [] operators
     template <typename T>
     class Iterator
     {
+        protected:
+            typedef       T   value_type;
+            typedef       T*  pointer;
+            typedef const T*  const_pointer;
+            typedef       T&  reference;
+            typedef const T&  const_reference;
+            typedef size_t    size_type;
+            typedef ptrdiff_t difference_type;
+
+            typedef std::shared_ptr<Node<value_type>> node_pointer;
+            typedef Iterator<value_type>              self_type;
+
+
         public:
             Iterator() :
                 element(nullptr)
@@ -20,7 +38,8 @@ namespace Linked
 
             }
 
-            Iterator(Node<T> * node) :
+            explicit
+            Iterator(node_pointer node) :
                 element(node)
             {
 
@@ -31,13 +50,60 @@ namespace Linked
 
             }
 
+            reference operator*()
+            {
+                return element.getData();
+            }
+
+            pointer operator->()
+            {
+                return &(operator*());
+            }
+
+            self_type& operator++()
+            {
+                element = element.next;
+            }
+
+            self_type  operator++(int)
+            {
+                value_type temp = *this;
+                ++(*this);
+                return temp;
+            }
+
+            self_type& operator--()
+            {
+                element = element.prev;
+            }
+
+            self_type  operator--(int)
+            {
+                value_type temp = *this;
+                --(*this);
+                return temp;
+            }
+
+
+
         private:
-            Node<T> * element;
+            node_pointer element;
     };
 
     template<typename T>
     class List
     {
+        protected:
+            typedef       T   value_type;
+            typedef       T*  pointer;
+            typedef const T*  const_pointer;
+            typedef       T&  reference;
+            typedef const T&  const_reference;
+            typedef size_t    size_type;
+            typedef ptrdiff_t difference_type;
+
+            typedef std::shared_ptr<Node<value_type>> node_pointer;
+
         public:
             List() :
                 count(0UL),
@@ -77,24 +143,24 @@ namespace Linked
 
             }
 
-            Iterator<T> find(uint32_t pos)
+            Iterator<value_type> find(uint32_t pos)
             {
                 if(pos > count)
                 {
-                    return Iterator<T>();
+                    return Iterator<value_type>();
                 }
 
-                Node<T> * currNode = head;
+                node_pointer currNode = head;
 
                 for(uint32_t i = 0UL; i < count; ++i)
                 {
                     currNode = currNode->next;
                 }
 
-                return Iterator<T>(currNode);
+                return Iterator<value_type>(currNode);
             }
 
-            size_t size()
+            size_type size()
             {
                 return size;
             }
@@ -107,10 +173,10 @@ namespace Linked
 
 
         private:
-            size_t count;
+            size_type count;
 
-            Node<T> * head;
-            Node<T> * tail;
+            Node<value_type> * head;
+            Node<value_type> * tail;
 
     };
 };
