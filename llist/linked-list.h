@@ -123,19 +123,39 @@ namespace Linked
 
             }
 
-            void push_back()
+            Iterator<value_type> push_back(value_type val)
             {
+                node_pointer newNode = new Node<value_type>();
+                newNode.setData(val);
 
+                tail->next = newNode;
+                tail = newNode;
+
+                return Iterator<value_type>(newNode);
             }
 
             void pop_back()
             {
-
+                node_pointer newNode = new Node<value_type>();
+                tail = tail->prev;
+                tail->next = nullptr;
             }
 
-            void remove()
+            bool remove(value_type val)
             {
+                bool retval = false;
 
+                for(auto it = begin(); it != end(); it++)
+                {
+                    if(val == *it)
+                    {
+                        retval = true;
+
+                        break;
+                    }
+                }
+
+                return retval;
             }
 
             void reverse()
@@ -168,6 +188,16 @@ namespace Linked
             bool empty()
             {
                 return count == 0UL;
+            }
+
+            Iterator<value_type> begin()
+            {
+                return Iterator<value_type>(head);
+            }
+
+            Iterator<value_type> end()
+            {
+                return Iterator<value_type>(head);
             }
 
 
