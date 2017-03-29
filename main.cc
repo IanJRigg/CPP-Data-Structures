@@ -18,5 +18,18 @@ int main(int argc, char ** argv)
 
     Linked::List<int> list;
 
+    list.push_back(0UL);
+    list.push_back(1UL);
+    list.push_back(2UL);
+    list.push_back(3UL);
+    list.push_back(4UL);
+    list.push_back(5UL);
+
+    for(auto it = list.begin(); it != list.end(); it++)
+    {
+        std::cout << *it << std::endl;
+    }
+
+
     return 0;
 }

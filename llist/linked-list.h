@@ -60,6 +60,16 @@ namespace Linked
                 return &(operator*());
             }
 
+            bool operator==(const self_type& other)
+            {
+                return operator*() == *other;
+            }
+
+            bool operator!=(const self_type& other)
+            {
+                return operator*() != *other;
+            }
+
             self_type& operator++()
             {
                 element = element.next;
