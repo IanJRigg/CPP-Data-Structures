@@ -22,20 +22,16 @@ namespace Linked
 
         public:
             Node() :
-                data(),
                 next(nullptr),
-                prev(nullptr)
+                prev(nullptr),
+                data()
             {
 
             }
 
             ~Node()
             {
-                // In case something went wrong previously.
-                if(prev)
-                {
-                    delete prev;
-                }
+
             }
 
             void setData(reference newData)

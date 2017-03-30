@@ -2,6 +2,7 @@
 #define _LLIST_H_
 
 // STL Headers
+#include <iostream>
 
 // Project Headers
 #include <uni-node.h>
@@ -33,14 +34,14 @@ namespace Linked
 
         public:
             Iterator() :
-                element(nullptr)
+                ptr(nullptr)
             {
 
             }
 
             explicit
             Iterator(node_pointer node) :
-                element(node)
+                ptr(node)
             {
 
             }
@@ -52,7 +53,7 @@ namespace Linked
 
             reference operator*()
             {
-                return element.getData();
+                return ptr->getData();
             }
 
             pointer operator->()
@@ -62,42 +63,41 @@ namespace Linked
 
             bool operator==(const self_type& other)
             {
-                return operator*() == *other;
+                return (ptr == other.ptr);
             }
 
             bool operator!=(const self_type& other)
             {
-                return operator*() != *other;
+                return (ptr != other.ptr);
             }
 
             self_type& operator++()
             {
-                element = element.next;
+                ptr = ptr->next;
+                return *this;
             }
 
             self_type  operator++(int)
             {
-                value_type temp = *this;
+                self_type temp(ptr);
                 ++(*this);
                 return temp;
             }
 
             self_type& operator--()
             {
-                element = element.prev;
+                ptr = ptr->prev;
             }
 
             self_type  operator--(int)
             {
-                value_type temp = *this;
+                self_type temp(ptr);
                 --(*this);
                 return temp;
             }
 
-
-
         private:
-            node_pointer element;
+            node_pointer ptr;
     };
 
     template<typename T>
@@ -135,18 +135,35 @@ namespace Linked
 
             Iterator<value_type> push_back(value_type val)
             {
-                node_pointer newNode = new Node<value_type>();
-                newNode.setData(val);
+                node_pointer newNode(new Node<value_type>);
+                newNode.get()->setData(val);
 
-                tail->next = newNode;
-                tail = newNode;
+                if(head.get() == nullptr)
+                {
+                    std::cout << "No segault in the head==null case" << std::endl;
+
+                    head.reset(newNode.get());
+                    tail.reset(newNode.get());
+                    count++;
+                }
+                else
+                {
+                    std::cout << "No segault in the head!=null case" << std::endl;
+
+                    tail->next = newNode;
+                    tail.reset(newNode.get());
+                    count++;
+
+                }
+
+                std::cout << "No segault here either..." << std::endl;
 
                 return Iterator<value_type>(newNode);
             }
 
             void pop_back()
             {
-                node_pointer newNode = new Node<value_type>();
+                node_pointer newNode(new Node<value_type>);
                 tail = tail->prev;
                 tail->next = nullptr;
             }
@@ -192,7 +209,7 @@ namespace Linked
 
             size_type size()
             {
-                return size;
+                return count;
             }
 
             bool empty()
@@ -215,8 +232,8 @@ namespace Linked
         private:
             size_type count;
 
-            Node<value_type> * head;
-            Node<value_type> * tail;
+            node_pointer head;
+            node_pointer tail;
 
     };
 };
