@@ -15,7 +15,6 @@
 
 namespace Linked
 {
-    // TODO: Implement ++, --, [] operators
     template <typename T>
     class Iterator
     {
@@ -115,6 +114,14 @@ namespace Linked
             typedef std::shared_ptr<Node<value_type>> node_pointer;
 
         public:
+
+            /*------------------------------------------------------------------
+            Function:    List()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Constructs an instance of the linked list with the
+                           class members zero'd out.
+            ------------------------------------------------------------------*/
             List() :
                 count(0UL),
                 head(nullptr),
@@ -123,61 +130,67 @@ namespace Linked
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    ~List()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Basic destructor, currently empty.
+            ------------------------------------------------------------------*/
             ~List()
             {
-                clear();
+
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    clear()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Empties the contents of the list. De-allocation must
+                           happen as result of this function ending.
+            ------------------------------------------------------------------*/
             void clear()
             {
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    push_back()
+            Arguments:   The value to be inserted into the list
+            Returns:     An iterator to the newly created node
+            Description: Insert a new node at the end of the list with the
+                           provided value type.
+            ------------------------------------------------------------------*/
             Iterator<value_type> push_back(value_type val)
             {
-                std::cout << "Entering the function" << std::endl;
-                node_pointer newNode(new Node<value_type>);
-                newNode.get()->setData(val);
+                node_pointer newNode(new Node<value_type>(val));
 
                 if(head.get() == nullptr)
                 {
-                    std::cout << "No segault in the (head == null) case" << std::endl;
-
-                    head.reset(newNode.get());
-                    tail.reset(newNode.get());
+                    head = newNode;
+                    tail = newNode;
                     count++;
                 }
                 else
                 {
-                    std::cout << "No segault in the (head != null) case" << std::endl;
-
-                    tail.get()->next.reset(newNode.get());
-                    newNode.get()->prev.reset(tail.get());
-                    tail.reset(newNode.get());
+                    tail.get()->next = newNode;
+                    newNode.get()->prev = tail;
+                    tail = newNode;
                     count++;
-
-                }
-
-                std::cout << "No segault here either..." << std::endl;
-
-                if(newNode.get() == nullptr)
-                {
-                    std::cout << "Bad pointer" << std::endl;
-                }
-
-                if(head.get() == nullptr)
-                {
-                    std::cout << "Head is null" << std::endl;
-                }
-
-                if(tail.get() == nullptr)
-                {
-                    std::cout << "Tail is null" << std::endl;
                 }
 
                 return Iterator<value_type>(newNode);
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    pop_back()
+            Arguments:   None
+            Returns:     Nothing
+            Description: removes the node at the end of the list.
+            ------------------------------------------------------------------*/
             void pop_back()
             {
                 node_pointer newNode(new Node<value_type>);
@@ -185,28 +198,53 @@ namespace Linked
                 tail->next = nullptr;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    remove()
+            Arguments:   None
+            Returns:     Boolean true or false
+            Description: Removes the node whose data matches val, returns true
+                           if the value is found in the list an is successfully
+                           removed, or false otherwise.
+            ------------------------------------------------------------------*/
             bool remove(value_type val)
             {
-                bool retval = false;
+                bool successful = false;
 
                 for(auto it = begin(); it != end(); it++)
                 {
                     if(val == *it)
                     {
-                        retval = true;
+                        successful = true;
+
+                        //it->prev->next = it->next;
 
                         break;
                     }
                 }
 
-                return retval;
+                return successful;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    reverse()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Reverses the list
+            ------------------------------------------------------------------*/
             void reverse()
             {
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    find()
+            Arguments:   An integer represent the position of the requested data
+            Returns:     Returns an iterator pointing to the node if one exists.
+            Description: Finds the element at the numeric position held by pos.
+            ------------------------------------------------------------------*/
             Iterator<value_type> find(uint32_t pos)
             {
                 if(pos > count)
@@ -224,27 +262,53 @@ namespace Linked
                 return Iterator<value_type>(currNode);
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    size()
+            Arguments:   None
+            Returns:     The contents of the count member
+            Description: Returns the size of the list, as tracked by count.
+            ------------------------------------------------------------------*/
             size_type size()
             {
                 return count;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    Empty()
+            Arguments:   None
+            Returns:     Boolean true or false
+            Description: Returns true if the list is not empty, false otherwise
+            ------------------------------------------------------------------*/
             bool empty()
             {
                 return count == 0UL;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    begin()
+            Arguments:   None
+            Returns:     Returns an iterator to the head node.
+            Description: N/A
+            ------------------------------------------------------------------*/
             Iterator<value_type> begin()
             {
                 return Iterator<value_type>(head);
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    end()
+            Arguments:   None
+            Returns:     An iterator to a null node.
+            Description: A null node is equivalent to the value of tail->next;
+            ------------------------------------------------------------------*/
             Iterator<value_type> end()
             {
-                return Iterator<value_type>(head);
+                return Iterator<value_type>(nullptr);
             }
-
-
 
         private:
             size_type count;

@@ -24,11 +24,21 @@ int main(int argc, char ** argv)
     list.push_back(3UL);
     list.push_back(4UL);
 
-    /*
-    for(auto it = list.begin(); it != list.end(); it++)
+    std::cout << "The size of the list is: " << list.size() << std::endl;
+
+    for(auto it = list.begin(); it != list.end(); ++it)
     {
         std::cout << *it << std::endl;
-    }*/
+    }
+
+    list.remove(4UL);
+
+    std::cout << "The size of the list is: " << list.size() << std::endl;
+
+    for(auto it = list.begin(); it != list.end(); ++it)
+    {
+        std::cout << *it << std::endl;
+    }
 
 
     return 0;
