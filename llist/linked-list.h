@@ -135,12 +135,13 @@ namespace Linked
 
             Iterator<value_type> push_back(value_type val)
             {
+                std::cout << "Entering the function" << std::endl;
                 node_pointer newNode(new Node<value_type>);
                 newNode.get()->setData(val);
 
                 if(head.get() == nullptr)
                 {
-                    std::cout << "No segault in the head==null case" << std::endl;
+                    std::cout << "No segault in the (head == null) case" << std::endl;
 
                     head.reset(newNode.get());
                     tail.reset(newNode.get());
@@ -148,15 +149,31 @@ namespace Linked
                 }
                 else
                 {
-                    std::cout << "No segault in the head!=null case" << std::endl;
+                    std::cout << "No segault in the (head != null) case" << std::endl;
 
-                    tail->next = newNode;
+                    tail.get()->next.reset(newNode.get());
+                    newNode.get()->prev.reset(tail.get());
                     tail.reset(newNode.get());
                     count++;
 
                 }
 
                 std::cout << "No segault here either..." << std::endl;
+
+                if(newNode.get() == nullptr)
+                {
+                    std::cout << "Bad pointer" << std::endl;
+                }
+
+                if(head.get() == nullptr)
+                {
+                    std::cout << "Head is null" << std::endl;
+                }
+
+                if(tail.get() == nullptr)
+                {
+                    std::cout << "Tail is null" << std::endl;
+                }
 
                 return Iterator<value_type>(newNode);
             }

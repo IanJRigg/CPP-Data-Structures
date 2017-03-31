@@ -29,6 +29,15 @@ namespace Linked
 
             }
 
+            explicit
+            Node(value_type val) :
+                next(nullptr),
+                prev(nullptr),
+                data(val)
+            {
+
+            }
+
             ~Node()
             {
 
