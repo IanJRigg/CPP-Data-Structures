@@ -22,6 +22,14 @@ namespace Linked
             typedef std::shared_ptr<Node<value_type>> node_pointer;
 
         public:
+
+            /*------------------------------------------------------------------
+            Function:    Node()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Default constructor, initializes both pointers to null,
+                           and calls the default constructor on data.
+            ------------------------------------------------------------------*/
             Node() :
                 next(nullptr),
                 prev(nullptr),
@@ -30,6 +38,14 @@ namespace Linked
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    ~List()
+            Arguments:   Value of type T.
+            Returns:     Nothing
+            Description: Single arument constructor, sets the pointers to null,
+                           and sets data to the provided value.
+            ------------------------------------------------------------------*/
             explicit
             Node(value_type val) :
                 next(nullptr),
@@ -39,16 +55,37 @@ namespace Linked
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    ~Node()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Destructor for the node class
+            ------------------------------------------------------------------*/
             ~Node()
             {
                 std::cout << "Destroying node with data: " << data << std::endl;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    setData()
+            Arguments:   A reference to a data variable of type T.
+            Returns:     Nothing
+            Description: Sets the data member to the provided data reference.
+            ------------------------------------------------------------------*/
             void setData(reference newData)
             {
                 data = newData;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    getData()
+            Arguments:   None
+            Returns:     A reference to the data member.
+            Description: Returns a reference to this instance's data member.
+            ------------------------------------------------------------------*/
             reference getData()
             {
                 return data;

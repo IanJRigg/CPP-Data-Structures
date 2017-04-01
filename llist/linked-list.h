@@ -225,7 +225,7 @@ namespace Linked
             Function:    ~List()
             Arguments:   None
             Returns:     Nothing
-            Description: Basic destructor, currently empty.
+            Description: Destructor, currently empty.
             ------------------------------------------------------------------*/
             ~List()
             {
