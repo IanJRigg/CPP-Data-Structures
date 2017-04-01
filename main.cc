@@ -14,6 +14,15 @@ void iterate(Linked::List<int> & list)
     std::cout << std::endl;
 }
 
+void populate(Linked::List<int> & list)
+{
+    list.push_back(0UL);
+    list.push_back(1UL);
+    list.push_back(2UL);
+    list.push_back(3UL);
+    list.push_back(4UL);
+}
+
 int main(int argc, char ** argv)
 {
     if(argc != 1UL)
@@ -25,16 +34,17 @@ int main(int argc, char ** argv)
         return 0UL;
     }
 
-    Binary::Tree<int, int> tree;
+    //Binary::Tree<int, int> tree;
 
     Linked::List<int> list;
+    populate(list);
+    list.clear();
+    populate(list);
 
-    list.push_back(0UL);
-    list.push_back(1UL);
-    list.push_back(2UL);
-    list.push_back(3UL);
-    list.push_back(4UL);
-
+    iterate(list);
+    list.reverse();
+    iterate(list);
+    list.reverse();
     iterate(list);
 
     list.remove(4UL);

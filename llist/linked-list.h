@@ -242,7 +242,21 @@ namespace Linked
             ------------------------------------------------------------------*/
             void clear()
             {
+                node_pointer node = head->next;
 
+                // Destroy the contents between head and tail.
+                while(node != tail)
+                {
+                    node->prev->next = nullptr;
+                    node->prev = nullptr;
+                    node = node->next;
+                }
+
+                // Destroy head and tail.
+                head->next = nullptr;
+                tail->prev = nullptr;
+                head = nullptr;
+                tail = nullptr;
             }
 
 
@@ -301,13 +315,19 @@ namespace Linked
             {
                 bool successful = false;
 
-                node_pointer currNode = head;
+                node_pointer node = head;
 
-                while(currNode.get() != nullptr)
+                while(node.get() != nullptr)
                 {
-                    if(currNode->getData() == val)
+                    if(node->getData() == val)
                     {
-                        if(currNode == head)
+                        if((node == head) &&
+                           (node == tail))
+                        {
+                            head = nullptr;
+                            tail = nullptr;
+                        }
+                        else if(node == head)
                         {
                             head = head->next;
                             if(head != nullptr)
@@ -315,9 +335,14 @@ namespace Linked
                                 head->prev = nullptr;
                             }
                         }
+                        else if(node == tail)
+                        {
+                            tail = tail->prev;
+                            tail->next = nullptr;
+                        }
                         else
                         {
-                            currNode->prev->next = currNode->next;
+                            node->prev->next = node->next;
                         }
 
                         --count;
@@ -325,7 +350,7 @@ namespace Linked
                         break;
                     }
 
-                    currNode = currNode->next;
+                    node = node->next;
                 }
 
                 return successful;
@@ -340,7 +365,21 @@ namespace Linked
             ------------------------------------------------------------------*/
             void reverse()
             {
+                node_pointer node = head;
+                node_pointer temp = nullptr;
 
+                while(node != nullptr)
+                {
+                    temp = node->next;
+                    node->next = node->prev;
+                    node->prev = temp;
+
+                    node = temp;
+                }
+
+                node = tail;
+                tail = head;
+                head = node;
             }
 
 
@@ -357,14 +396,14 @@ namespace Linked
                     return Iterator<value_type>();
                 }
 
-                node_pointer currNode = head;
+                node_pointer node = head;
 
                 for(uint32_t i = 0UL; i < count; ++i)
                 {
-                    currNode = currNode->next;
+                    node = node->next;
                 }
 
-                return Iterator<value_type>(currNode);
+                return Iterator<value_type>(node);
             }
 
 
