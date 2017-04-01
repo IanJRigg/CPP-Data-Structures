@@ -15,6 +15,7 @@
 
 namespace Linked
 {
+    // TODO: Implement a const iterator
     template <typename T>
     class Iterator
     {
