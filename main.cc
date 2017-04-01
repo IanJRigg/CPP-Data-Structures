@@ -3,6 +3,17 @@
 #include <iostream>
 #include <string>
 
+
+void iterate(Linked::List<int> & list)
+{
+    std::cout << "List contents: " << std::endl;
+    for(auto it = list.begin(); it != list.end(); ++it)
+    {
+        std::cout << *it << std::endl;
+    }
+    std::cout << std::endl;
+}
+
 int main(int argc, char ** argv)
 {
     if(argc != 1UL)
@@ -24,22 +35,25 @@ int main(int argc, char ** argv)
     list.push_back(3UL);
     list.push_back(4UL);
 
-    std::cout << "The size of the list is: " << list.size() << std::endl;
-
-    for(auto it = list.begin(); it != list.end(); ++it)
-    {
-        std::cout << *it << std::endl;
-    }
+    iterate(list);
 
     list.remove(4UL);
 
-    std::cout << "The size of the list is: " << list.size() << std::endl;
+    iterate(list);
 
-    for(auto it = list.begin(); it != list.end(); ++it)
-    {
-        std::cout << *it << std::endl;
-    }
+    list.remove(3UL);
 
+    iterate(list);
+
+    list.remove(2UL);
+
+    iterate(list);
+
+    list.remove(1UL);
+
+    iterate(list);
+
+    list.remove(0UL);
 
     return 0;
 }

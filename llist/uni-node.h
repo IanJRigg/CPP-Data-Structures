@@ -3,6 +3,7 @@
 
 // STL Includes
 #include <memory>
+#include <iostream>
 
 namespace Linked
 {
@@ -40,7 +41,7 @@ namespace Linked
 
             ~Node()
             {
-
+                std::cout << "Destroying node with data: " << data << std::endl;
             }
 
             void setData(reference newData)

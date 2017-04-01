@@ -32,12 +32,27 @@ namespace Linked
 
 
         public:
+
+            /*------------------------------------------------------------------
+            Function:    Iterator()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Initializes an iterator which points to null
+            ------------------------------------------------------------------*/
             Iterator() :
                 ptr(nullptr)
             {
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    Iterator()
+            Arguments:   Pointer to a node object
+            Returns:     Nothing
+            Description: Initializes an iterator which points to the node object
+                           pointed to by node.
+            ------------------------------------------------------------------*/
             explicit
             Iterator(node_pointer node) :
                 ptr(node)
@@ -45,37 +60,94 @@ namespace Linked
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    ~Iterator()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Empty destructor
+            ------------------------------------------------------------------*/
             ~Iterator()
             {
 
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    Operator*()
+            Arguments:   Nothing
+            Returns:     Returns a reference to a T object.
+            Description: Dereferences the iterator's pointer object and returns
+                           the Node's data member.
+            ------------------------------------------------------------------*/
             reference operator*()
             {
                 return ptr->getData();
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    operator->()
+            Arguments:   Nothing
+            Returns:     Returns a pointer to a T object.
+            Description: Returns a pointer to the data member of the iterator's
+                           node object.
+            ------------------------------------------------------------------*/
             pointer operator->()
             {
                 return &(operator*());
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    operator==()
+            Arguments:   const Iterator<T> reference
+            Returns:     True if the pointers are the identical, otherwise false
+            Description: Compares the current iterator's pointer against the
+                           provided iterator.
+            ------------------------------------------------------------------*/
             bool operator==(const self_type& other)
             {
                 return (ptr == other.ptr);
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    operator==()
+            Arguments:   const Iterator<T> reference
+            Returns:     True if the pointeres are different, otherwise false
+            Description: Compares the current iterator's pointer against the
+                           provided iterator.
+            ------------------------------------------------------------------*/
             bool operator!=(const self_type& other)
             {
                 return (ptr != other.ptr);
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    operator++()
+            Arguments:   None
+            Returns:     Returns a reference to an Iterator object.
+            Description: Pre-increment. Advances the current pointer to the node
+                           pointer which is stored in the current node's next
+                           member.
+            ------------------------------------------------------------------*/
             self_type& operator++()
             {
                 ptr = ptr->next;
                 return *this;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    operator++()
+            Arguments:   None
+            Returns:     Returns a reference to an Iterator object.
+            Description: Post-increment. Advances the member pointer to the
+                           node pointer which is stored in the current node's
+                           next member.
+            ------------------------------------------------------------------*/
             self_type  operator++(int)
             {
                 self_type temp(ptr);
@@ -83,11 +155,29 @@ namespace Linked
                 return temp;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    operator--()
+            Arguments:   None
+            Returns:     Returns a reference to an Iterator object.
+            Description: Pre-decrement. Retreats the member pointer to the
+                           node pointer which is stored in the current node's
+                           prev member.
+            ------------------------------------------------------------------*/
             self_type& operator--()
             {
                 ptr = ptr->prev;
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    operator--()
+            Arguments:   None
+            Returns:     Returns a reference to an Iterator object.
+            Description: Post-decrement. Retreats the member pointer to the
+                           node pointer which is stored in the current node's
+                           prev member.
+            ------------------------------------------------------------------*/
             self_type  operator--(int)
             {
                 self_type temp(ptr);
@@ -175,8 +265,8 @@ namespace Linked
                 }
                 else
                 {
-                    tail.get()->next = newNode;
-                    newNode.get()->prev = tail;
+                    tail->next    = newNode;
+                    newNode->prev = tail;
                     tail = newNode;
                     count++;
                 }
@@ -211,16 +301,31 @@ namespace Linked
             {
                 bool successful = false;
 
-                for(auto it = begin(); it != end(); it++)
+                node_pointer currNode = head;
+
+                while(currNode.get() != nullptr)
                 {
-                    if(val == *it)
+                    if(currNode->getData() == val)
                     {
+                        if(currNode == head)
+                        {
+                            head = head->next;
+                            if(head != nullptr)
+                            {
+                                head->prev = nullptr;
+                            }
+                        }
+                        else
+                        {
+                            currNode->prev->next = currNode->next;
+                        }
+
+                        --count;
                         successful = true;
-
-                        //it->prev->next = it->next;
-
                         break;
                     }
+
+                    currNode = currNode->next;
                 }
 
                 return successful;
