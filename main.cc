@@ -1,5 +1,7 @@
 #include <binary-tree.h>
 #include <linked-list.h>
+#include <stack.h>
+#include <queue.h>
 #include <iostream>
 #include <string>
 
@@ -23,18 +25,9 @@ void populate(Linked::List<int> & list)
     list.push_back(4UL);
 }
 
-int main(int argc, char ** argv)
+bool test_linked_list()
 {
-    if(argc != 1UL)
-    {
-        std::cout << "Invalid argument provided: "
-                  << argv[1]
-                  << std::endl;
-
-        return 0UL;
-    }
-
-    //Binary::Tree<int, int> tree;
+    bool successful = false;
 
     Linked::List<int> list;
     populate(list);
@@ -64,6 +57,41 @@ int main(int argc, char ** argv)
     iterate(list);
 
     list.remove(0UL);
+
+    return successful;
+}
+
+bool test_stack()
+{
+    bool successful = false;
+    Linked::Stack<int> stack;
+    return successful;
+}
+
+bool test_queue()
+{
+    bool successful = false;
+    Linked::Queue<int> queue;
+    return successful;
+}
+
+bool test_binary_tree()
+{
+    bool successful = false;
+    Binary::Tree<int, int> tree;
+    return successful;
+}
+
+int main(int argc, char ** argv)
+{
+    if(argc != 1UL)
+    {
+        std::cout << "Invalid argument provided: "
+                  << argv[1]
+                  << std::endl;
+
+        return 0UL;
+    }
 
     return 0;
 }

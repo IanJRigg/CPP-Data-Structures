@@ -19,17 +19,16 @@ namespace Linked
     template <typename T>
     class Iterator
     {
-        protected:
-            typedef       T   value_type;
-            typedef       T*  pointer;
-            typedef const T*  const_pointer;
-            typedef       T&  reference;
-            typedef const T&  const_reference;
-            typedef size_t    size_type;
-            typedef ptrdiff_t difference_type;
+        typedef       T   value_type;
+        typedef       T*  pointer;
+        typedef const T*  const_pointer;
+        typedef       T&  reference;
+        typedef const T&  const_reference;
+        typedef size_t    size_type;
+        typedef ptrdiff_t difference_type;
 
-            typedef std::shared_ptr<Node<value_type>> node_pointer;
-            typedef Iterator<value_type>              self_type;
+        typedef std::shared_ptr<Node<value_type>> node_pointer;
+        typedef Iterator<value_type>              self_type;
 
 
         public:
@@ -193,16 +192,15 @@ namespace Linked
     template<typename T>
     class List
     {
-        protected:
-            typedef       T   value_type;
-            typedef       T*  pointer;
-            typedef const T*  const_pointer;
-            typedef       T&  reference;
-            typedef const T&  const_reference;
-            typedef size_t    size_type;
-            typedef ptrdiff_t difference_type;
+        typedef       T   value_type;
+        typedef       T*  pointer;
+        typedef const T*  const_pointer;
+        typedef       T&  reference;
+        typedef const T&  const_reference;
+        typedef size_t    size_type;
+        typedef ptrdiff_t difference_type;
 
-            typedef std::shared_ptr<Node<value_type>> node_pointer;
+        typedef std::shared_ptr<Node<value_type>> node_pointer;
 
         public:
 
@@ -292,21 +290,30 @@ namespace Linked
             /*------------------------------------------------------------------
             Function:    pop_back()
             Arguments:   None
-            Returns:     Nothing
+            Returns:     True if the list isn't empty and the operation could be
+                           completed.
             Description: removes the node at the end of the list.
             ------------------------------------------------------------------*/
-            void pop_back()
+            bool pop_back()
             {
-                tail = tail->prev;
-                tail->next = nullptr;
-                --count;
+                bool successful = false;
+
+                if(!empty())
+                {
+                    tail = tail->prev;
+                    tail->next = nullptr;
+                    --count;
+                    successful = true;
+                }
+
+                return successful;
             }
 
 
             /*------------------------------------------------------------------
-            Function:    pop_back()
-            Arguments:   None
-            Returns:     Nothing
+            Function:    enqueue()
+            Arguments:   Value to enter into the list.
+            Returns:     Iterator with the pointer of the inserted element.
             Description: Creates a node with the provided value and appends it
                            to the front of the list.
             ------------------------------------------------------------------*/
@@ -320,16 +327,25 @@ namespace Linked
 
 
             /*------------------------------------------------------------------
-            Function:    pop_back()
+            Function:    dequeue()
             Arguments:   None
-            Returns:     Nothing
+            Returns:     True if the list isn't empty and the operation could be
+                           completed.
             Description: Removes the node at the front of the list.
             ------------------------------------------------------------------*/
-            void dequeue()
+            bool dequeue()
             {
-                head = head->next;
-                head->prev = nullptr;
-                --count;
+                bool successful = false;
+
+                if(!empty())
+                {
+                    head = head->next;
+                    head->prev = nullptr;
+                    --count;
+                    successful = true;
+                }
+
+                return successful;
             }
 
 
