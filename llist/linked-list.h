@@ -275,16 +275,15 @@ namespace Linked
                 if(head.get() == nullptr)
                 {
                     head = newNode;
-                    tail = newNode;
-                    count++;
                 }
                 else
                 {
                     tail->next    = newNode;
                     newNode->prev = tail;
-                    tail = newNode;
-                    count++;
                 }
+
+                tail = newNode;
+                count++;
 
                 return Iterator<value_type>(newNode);
             }
@@ -298,9 +297,39 @@ namespace Linked
             ------------------------------------------------------------------*/
             void pop_back()
             {
-                node_pointer newNode(new Node<value_type>);
                 tail = tail->prev;
                 tail->next = nullptr;
+                --count;
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    pop_back()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Creates a node with the provided value and appends it
+                           to the front of the list.
+            ------------------------------------------------------------------*/
+            Iterator<value_type> enqueue(value_type val)
+            {
+                node_pointer node(new Node<value_type>(val));
+                node->next = head;
+                head = node;
+                ++count;
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    pop_back()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Removes the node at the front of the list.
+            ------------------------------------------------------------------*/
+            void dequeue()
+            {
+                head = head->next;
+                head->prev = nullptr;
+                --count;
             }
 
 
