@@ -2,8 +2,6 @@
 # Makefile for the data structures project
 
 # Compile Output Directories
-LIB_DIR        := ./libraries
-
 MAIN           := main
 
 # Library Source Directories
@@ -14,18 +12,24 @@ HASHTABLE      := ./hashtable
 QUEUE          := ./queue
 STACK          := ./stack
 LLIST          := ./llist
+TEST           := ./test
 
-# Library Object Directories
-BTREE_OBJ      := $(BTREE)/.obj
-RBTREE_OBJ     := $(RBTREE)/.obj
-GRAPH_OBJ      := $(GRAPH)/.obj
-HASHTABLE_OBJ  := $(HASHTABLE)/.obj
-QUEUE_OBJ      := $(QUEUE)/.obj
-STACK_OBJ      := $(STACK)/.obj
+
+TEST_FILES := $(shell find $(TEST) -name "*.cc")
+TEST_OBJS  := $(addsuffix .o, $(basename $(TEST_FILES)))
 
 INCLUDE_FLAGS  := -Wall -Wextra -Werror -fstack-protector-all -std=c++11 -O3
 
-MAIN_INCLUDE_FLAGS := $(INCLUDE_FLAGS) -I./ -I$(BTREE) -I$(LLIST) -I$(STACK) -I$(QUEUE)
+MAIN_INCLUDE_FLAGS := $(INCLUDE_FLAGS) \
+                      -I$(TEST)
+
+TEST_INCLUDE_FLAGS := $(INCLUDE_FLAGS) \
+                      -I./             \
+                      -I$(BTREE)       \
+                      -I$(LLIST)       \
+                      -I$(STACK)       \
+                      -I$(QUEUE)       \
+                      -I$(TEST)
 
 VPATH := $(BTREE)
 
@@ -35,8 +39,11 @@ VPATH := $(BTREE)
 # Generic GNU Make Targets
 
 .PHONY: all
-all:
-	g++ main.cc -o $(MAIN) $(MAIN_INCLUDE_FLAGS) $(BTREE_LIB)
+all: test
+
+.PHONY: test
+test: $(TEST_OBJS)
+	g++ main.cc $^ -o $(MAIN) $(MAIN_INCLUDE_FLAGS)
 
 .PHONY: clean
 clean:
@@ -44,8 +51,6 @@ clean:
 	@rm -f  ./**/*.o
 	@rm -f  $(MAIN)
 
-################################################################################
-# Miscelaneous directory rules
-
-$(LIB_DIR):
-	@mkdir $@
+%.o : %.cc
+	$(info $(TEST_OBJS))
+	$(CXX) $(TEST_INCLUDE_FLAGS) -c $< -o $@
