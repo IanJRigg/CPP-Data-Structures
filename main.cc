@@ -1,3 +1,7 @@
+#define CATCH_CONFIG_MAIN
+#include <catch.hpp>
+
+
 #include <binary-tree.h>
 #include <linked-list.h>
 #include <stack.h>
@@ -5,6 +9,42 @@
 #include <iostream>
 #include <string>
 
+#include <vector>
+
+/* TEMPLATE FOR SCOFFOLDING OUT UNIT TESTS
+TEST_CASE( "vectors can be sized and resized", "[vector]" ) {
+
+    std::vector<int> v( 5 );
+
+    REQUIRE( v.size() == 5 );
+    REQUIRE( v.capacity() >= 5 );
+
+    SECTION( "resizing bigger changes size and capacity" ) {
+        v.resize( 10 );
+
+        REQUIRE( v.size() == 10 );
+        REQUIRE( v.capacity() >= 10 );
+    }
+    SECTION( "resizing smaller changes size but not capacity" ) {
+        v.resize( 0 );
+
+        REQUIRE( v.size() == 0 );
+        REQUIRE( v.capacity() >= 5 );
+    }
+    SECTION( "reserving bigger changes capacity but not size" ) {
+        v.reserve( 10 );
+
+        REQUIRE( v.size() == 5 );
+        REQUIRE( v.capacity() >= 10 );
+    }
+    SECTION( "reserving smaller does not change size or capacity" ) {
+        v.reserve( 0 );
+
+        REQUIRE( v.size() == 5 );
+        REQUIRE( v.capacity() >= 5 );
+    }
+}
+*/
 
 void iterate(Linked::List<int> & list)
 {
@@ -82,6 +122,7 @@ bool test_binary_tree()
     return successful;
 }
 
+/*
 int main(int argc, char ** argv)
 {
     if(argc != 1UL)
@@ -94,4 +135,4 @@ int main(int argc, char ** argv)
     }
 
     return 0;
-}
+}*/
