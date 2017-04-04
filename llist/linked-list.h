@@ -430,30 +430,6 @@ namespace Linked
 
 
             /*------------------------------------------------------------------
-            Function:    find()
-            Arguments:   An integer represent the position of the requested data
-            Returns:     Returns an iterator pointing to the node if one exists.
-            Description: Finds the element at the numeric position held by pos.
-            ------------------------------------------------------------------*/
-            Iterator<value_type> find(uint32_t pos)
-            {
-                if(pos > count)
-                {
-                    return Iterator<value_type>();
-                }
-
-                node_pointer node = head;
-
-                for(uint32_t i = 0UL; i < count; ++i)
-                {
-                    node = node->next;
-                }
-
-                return Iterator<value_type>(node);
-            }
-
-
-            /*------------------------------------------------------------------
             Function:    size()
             Arguments:   None
             Returns:     The contents of the count member
@@ -497,7 +473,7 @@ namespace Linked
             ------------------------------------------------------------------*/
             Iterator<value_type> end()
             {
-                return Iterator<value_type>(nullptr);
+                return Iterator<value_type>(tail);
             }
 
         private:
