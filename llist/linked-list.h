@@ -50,7 +50,7 @@ namespace Linked
             Function:    Iterator()
             Arguments:   Pointer to a node object
             Returns:     Nothing
-            Description: Initializes an iterator which points to the node object
+            Description: Initializes an iterator which points to the object
                            pointed to by node.
             ------------------------------------------------------------------*/
             explicit
@@ -121,7 +121,7 @@ namespace Linked
             ------------------------------------------------------------------*/
             bool operator!=(const self_type& other)
             {
-                return (ptr != other.ptr);
+                return !(operator==(other));
             }
 
 

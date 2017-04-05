@@ -10,16 +10,15 @@ namespace Linked
     template<typename T>
     class Node
     {
-        protected:
-            typedef       T   value_type;
-            typedef       T*  pointer;
-            typedef const T*  const_pointer;
-            typedef       T&  reference;
-            typedef const T&  const_reference;
-            typedef size_t    size_type;
-            typedef ptrdiff_t difference_type;
+        typedef       T   value_type;
+        typedef       T*  pointer;
+        typedef const T*  const_pointer;
+        typedef       T&  reference;
+        typedef const T&  const_reference;
+        typedef size_t    size_type;
+        typedef ptrdiff_t difference_type;
 
-            typedef std::shared_ptr<Node<value_type>> node_pointer;
+        typedef std::shared_ptr<Node<value_type>> node_pointer;
 
         public:
 
