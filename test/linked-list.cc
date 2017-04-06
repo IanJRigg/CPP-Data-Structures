@@ -30,14 +30,14 @@ TEST_CASE( "Test the linked list with 0, 1, and many elements" )
         REQUIRE(list.empty()   == false);
         REQUIRE(list.size()    == 1UL);
         REQUIRE(list.begin()   == it);
-        REQUIRE(list.end()     == it);
+        REQUIRE(list.end()     == null_iterator);
 
         list.reverse();
 
         REQUIRE(list.empty()   == false);
         REQUIRE(list.size()    == 1UL);
         REQUIRE(list.begin()   == it);
-        REQUIRE(list.end()     == it);
+        REQUIRE(list.end()     == null_iterator);
     }
 
     SECTION("List withi many elements")
@@ -49,16 +49,13 @@ TEST_CASE( "Test the linked list with 0, 1, and many elements" )
         REQUIRE(list.empty()   == false);
         REQUIRE(list.size()    == 3UL);
         REQUIRE(list.begin()   == it_0);
-        REQUIRE(list.end()     == it_2);
 
         list.reverse();
 
         REQUIRE(list.empty()   == false);
         REQUIRE(list.size()    == 3UL);
         REQUIRE(list.begin()   != it_0);
-        REQUIRE(list.end()     != it_2);
         REQUIRE(list.begin()   == it_2);
-        REQUIRE(list.end()     == it_0);
     }
 
 

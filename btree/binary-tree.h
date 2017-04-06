@@ -3,6 +3,7 @@
 
 #include <bi-node.h>
 #include <iostream>
+#include <stdexcept>
 
 namespace Binary
 {
@@ -214,7 +215,24 @@ namespace Binary
             ------------------------------------------------------------------*/
             Iterator<value_type> find(key_type key)
             {
-                return Iterator<value_type>(nullptr);
+                node_pointer node = root;
+                while(node != nullptr)
+                {
+                    if(key < node->getValue().second)
+                    {
+                        node = node.left;
+                    }
+                    else if(node->getValue().second > key)
+                    {
+                        node = node.right;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                return Iterator<value_type>(node);
             }
 
 

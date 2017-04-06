@@ -473,7 +473,7 @@ namespace Linked
             ------------------------------------------------------------------*/
             Iterator<value_type> end()
             {
-                return Iterator<value_type>(tail);
+                return Iterator<value_type>(nullptr);
             }
 
         private:
