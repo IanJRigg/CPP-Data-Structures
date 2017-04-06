@@ -207,6 +207,18 @@ namespace Binary
 
 
             /*------------------------------------------------------------------
+            Function:    erase()
+            Arguments:   An iterator pointing to the element to be erased
+            Returns:     Nothing
+            Description: Removes the node with the key held in pos.
+            ------------------------------------------------------------------*/
+            void erase(Iterator<value_type> pos)
+            {
+                return;
+            }
+
+
+            /*------------------------------------------------------------------
             Function:    find()
             Arguments:   None
             Returns:     An iterator pointing to the value type with the
@@ -232,7 +244,7 @@ namespace Binary
                     }
                 }
 
-                return Iterator<value_type>(node);
+                return end();
             }
 
 
@@ -244,17 +256,18 @@ namespace Binary
             ------------------------------------------------------------------*/
             mapped_type at(key_type key)
             {
-                /*
-                    if val == currnode
-                        return node
-                    else if rnode && val > currnode->val
-                        return find(rnode)
-                    else if lnode && val < currnode->val
-                        return find(lnode)
-                    else
-                        return nullptr
-                */
+                Iterator<value_type> it = find(key);
+                if(it != end())
+                {
+                    return it.second();
+                }
+                else
+                {
+                    throw std::out_of_range;
+                }
             }
+
+
 
 
             /*------------------------------------------------------------------
@@ -309,8 +322,8 @@ namespace Binary
             /*------------------------------------------------------------------
             Function:    end()
             Arguments:   None
-            Returns:     An iterator pointing ot the right-most node.
-            Description: Returns the end of the tree.
+            Returns:     An iterator pointing at past the end of the tree (NULL)
+            Description: Returns an iterator to the past-the-end element
             ------------------------------------------------------------------*/
             Iterator<value_type> end()
             {
