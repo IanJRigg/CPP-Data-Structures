@@ -256,6 +256,8 @@ namespace Linked
                 tail->prev = nullptr;
                 head = nullptr;
                 tail = nullptr;
+
+                count = 0UL;
             }
 
 

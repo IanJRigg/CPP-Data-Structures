@@ -56,6 +56,12 @@ TEST_CASE( "Test the linked list with 0, 1, and many elements" )
         REQUIRE(list.size()    == 3UL);
         REQUIRE(list.begin()   != it_0);
         REQUIRE(list.begin()   == it_2);
+
+        list.clear();
+
+        REQUIRE(list.empty() == true);
+        REQUIRE(list.size()  == 0UL);
+        REQUIRE(list.begin() == null_iterator);
     }
 
 
