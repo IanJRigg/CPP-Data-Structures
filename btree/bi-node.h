@@ -9,8 +9,8 @@ namespace Binary
     class Node
     {
         typedef K   key_type;
-        typedef T   mapped_type;
-        typedef std::pair<key_type, mapped_type> value_type;
+        typedef V   value_type;
+        //typedef std::pair<key_type, mapped_type> value_type;
 
         typedef       value_type*  pointer;
         typedef const value_type*  const_pointer;
@@ -19,7 +19,7 @@ namespace Binary
         typedef size_t             size_type;
         typedef ptrdiff_t          difference_type;
 
-        typedef std::shared_ptr<Node<value_type>> node_pointer;
+        typedef std::shared_ptr<Node<key_type, value_type>> node_pointer;
 
         public:
 
