@@ -11,8 +11,8 @@ namespace Binary
     class Iterator
     {
         typedef K   key_type;
-        typedef V   value_type;
-        //typedef std::pair<key_type, mapped_type> value_type;
+        typedef V   mapped_type;
+        typedef std::pair<key_type, mapped_type> value_type;
 
         typedef       value_type*  pointer;
         typedef const value_type*  const_pointer;
@@ -21,8 +21,8 @@ namespace Binary
         typedef size_t             size_type;
         typedef ptrdiff_t          difference_type;
 
-        typedef std::shared_ptr<Node<key_type, value_type>> node_pointer;
-        typedef Iterator<key_type, value_type>    self_type;
+        typedef std::shared_ptr<Node<key_type, mapped_type>> node_pointer;
+        typedef Iterator<key_type, mapped_type>    self_type;
 
         public:
 
@@ -124,8 +124,8 @@ namespace Binary
     class Tree
     {
         typedef K   key_type;
-        typedef V   value_type;
-        //typedef std::pair<key_type, mapped_type> value_type;
+        typedef V   mapped_type;
+        typedef std::pair<key_type, mapped_type> value_type;
 
         typedef       value_type*  pointer;
         typedef const value_type*  const_pointer;
@@ -134,7 +134,7 @@ namespace Binary
         typedef size_t             size_type;
         typedef ptrdiff_t          difference_type;
 
-        typedef std::shared_ptr<Node<key_type, value_type>> node_pointer;
+        typedef std::shared_ptr<Node<key_type, mapped_type>> node_pointer;
 
         public:
             /*------------------------------------------------------------------
@@ -169,7 +169,7 @@ namespace Binary
             Returns:     An iterator pointing to the inserted element.
             Description: Inserts the provided value into the binary tree.
             ------------------------------------------------------------------*/
-            Iterator<key_type, value_type> insert(value_type value)
+            Iterator<key_type, mapped_type> insert(value_type value)
             {    /*
                     retval = false
                     if curr_node
@@ -192,7 +192,7 @@ namespace Binary
                     return retval
                 */
                 std::cout << value << std::endl;
-                return Iterator<key_type, value_type>(nullptr);
+                return Iterator<key_type, mapped_type>(nullptr);
             }
 
 
@@ -214,7 +214,7 @@ namespace Binary
             Returns:     Nothing
             Description: Removes the node with the key held in pos.
             ------------------------------------------------------------------*/
-            void erase(Iterator<key_type, value_type> pos)
+            void erase(Iterator<key_type, mapped_type> pos)
             {
                 std::cout << *pos << std::endl;
                 return;
@@ -228,7 +228,7 @@ namespace Binary
                            provided key
             Description: Empty destructor
             ------------------------------------------------------------------*/
-            Iterator<key_type, value_type> find(key_type key)
+            Iterator<key_type, mapped_type> find(key_type key)
             {
                 node_pointer node = root;
                 while(node != nullptr)
@@ -259,7 +259,7 @@ namespace Binary
             ------------------------------------------------------------------*/
             void at(key_type key)
             {
-                //Iterator<key_type, value_type> it = find(key);
+                //Iterator<key_type, mapped_type> it = find(key);
                 //if(it != end())
                 //{
                 //    return it.second();
@@ -317,9 +317,9 @@ namespace Binary
             Returns:     An iterator pointing to the left-most node.
             Description: Returns the front of the tree.
             ------------------------------------------------------------------*/
-            Iterator<key_type, value_type> front()
+            Iterator<key_type, mapped_type> front()
             {
-                return Iterator<key_type, value_type>(nullptr);
+                return Iterator<key_type, mapped_type>(nullptr);
             }
 
 
@@ -329,9 +329,9 @@ namespace Binary
             Returns:     An iterator pointing at past the end of the tree (NULL)
             Description: Returns an iterator to the past-the-end element
             ------------------------------------------------------------------*/
-            Iterator<key_type, value_type> end()
+            Iterator<key_type, mapped_type> end()
             {
-                return Iterator<key_type, value_type>(nullptr);
+                return Iterator<key_type, mapped_type>(nullptr);
             }
 
         private:
