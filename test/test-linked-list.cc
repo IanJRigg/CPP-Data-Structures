@@ -114,38 +114,82 @@ TEST_CASE( "Test the linked list with 1 element" )
 
     SECTION("Test List::clear")
     {
+        list.clear();
 
+        // Ensure that the list has been emptied
+        REQUIRE(list.empty()   == true);
+        REQUIRE(list.size()    == 0UL);
+        REQUIRE(list.begin()   == null_iterator);
+        REQUIRE(list.end()     == null_iterator);
     }
 
     SECTION("Test List::push_back")
     {
+        // Push back some data into the list
+        auto it_1 = list.push_back(1UL);
+        auto it_sec = ++(list.begin());
 
+        // Ensure the list changes as expected
+        REQUIRE(list.empty() == false);
+        REQUIRE(list.size()  == 2UL);
+        REQUIRE(list.begin() == it_0);
+        REQUIRE(it_sec       == it_1);
+        REQUIRE(list.end()   == null_iterator);
     }
 
     SECTION("Test List::pop_back")
     {
+        // Ensure that the function removes an element
+        REQUIRE(list.pop_back() == true);
 
+        // Ensure that the list is now empty
+        REQUIRE(list.empty()    == true);
+        REQUIRE(list.size()     == 0UL);
+        REQUIRE(list.begin()    == null_iterator);
+        REQUIRE(list.end()      == null_iterator);
     }
 
     SECTION("Test List::enqueue")
     {
+        // Enqueue some data into the list.
+        auto it_1 = list.enqueue(1UL);
 
+        // Ensure the list changes as expected
+        REQUIRE(list.empty()    == false);
+        REQUIRE(list.size()     == 2UL);
+        REQUIRE(list.begin()    == it_1);
+        REQUIRE(list.end()      == null_iterator);
     }
 
     SECTION("Test List::dequeue")
     {
+        // Ensure that the function removes an element
+        REQUIRE(list.dequeue() == true);
 
+        // Ensure that the list is now empty
+        REQUIRE(list.empty()   == true);
+        REQUIRE(list.size()    == 0UL);
+        REQUIRE(list.begin()   == null_iterator);
+        REQUIRE(list.end()     == null_iterator);
     }
 
     SECTION("Test List::remove")
     {
+        // Ensure that the function does not succeed
+        REQUIRE(list.remove(0UL) == true);
 
+        // Ensure that the list is now empty
+        REQUIRE(list.empty()   == true);
+        REQUIRE(list.size()    == 0UL);
+        REQUIRE(list.begin()   == null_iterator);
+        REQUIRE(list.end()     == null_iterator);
     }
 
     SECTION("Test List::reverse")
     {
         list.reverse();
 
+        // Ensure that the list is not empty
         REQUIRE(list.empty()   == false);
         REQUIRE(list.size()    == 1UL);
         REQUIRE(list.begin()   == it_0);

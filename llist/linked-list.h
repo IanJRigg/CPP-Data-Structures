@@ -246,7 +246,7 @@ namespace Linked
                     node_pointer node = head->next;
 
                     // Destroy the contents between head and tail.
-                    while(node != tail)
+                    while(node != nullptr)
                     {
                         node->prev->next = nullptr;
                         node->prev = nullptr;
@@ -305,8 +305,17 @@ namespace Linked
 
                 if(!empty())
                 {
-                    tail = tail->prev;
-                    tail->next = nullptr;
+                    if(head == tail)
+                    {
+                        head = nullptr;
+                        tail = nullptr;
+                    }
+                    else
+                    {
+                        tail = tail->prev;
+                        tail->next = nullptr;
+                    }
+
                     --count;
                     successful = true;
                 }
@@ -346,8 +355,17 @@ namespace Linked
 
                 if(!empty())
                 {
-                    head = head->next;
-                    head->prev = nullptr;
+                    if(head == tail)
+                    {
+                        head = nullptr;
+                        tail = nullptr;
+                    }
+                    else
+                    {
+                        head = head->next;
+                        head->prev = nullptr;
+                    }
+
                     --count;
                     successful = true;
                 }
