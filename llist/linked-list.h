@@ -241,23 +241,26 @@ namespace Linked
             ------------------------------------------------------------------*/
             void clear()
             {
-                node_pointer node = head->next;
-
-                // Destroy the contents between head and tail.
-                while(node != tail)
+                if(!empty())
                 {
-                    node->prev->next = nullptr;
-                    node->prev = nullptr;
-                    node = node->next;
+                    node_pointer node = head->next;
+
+                    // Destroy the contents between head and tail.
+                    while(node != tail)
+                    {
+                        node->prev->next = nullptr;
+                        node->prev = nullptr;
+                        node = node->next;
+                    }
+
+                    // Destroy head and tail.
+                    head->next = nullptr;
+                    tail->prev = nullptr;
+                    head = nullptr;
+                    tail = nullptr;
+
+                    count = 0UL;
                 }
-
-                // Destroy head and tail.
-                head->next = nullptr;
-                tail->prev = nullptr;
-                head = nullptr;
-                tail = nullptr;
-
-                count = 0UL;
             }
 
 
@@ -325,6 +328,8 @@ namespace Linked
                 node->next = head;
                 head = node;
                 ++count;
+
+                return begin();
             }
 
 

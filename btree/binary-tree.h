@@ -259,12 +259,12 @@ namespace Binary
             ------------------------------------------------------------------*/
             void at(key_type key)
             {
-                //Iterator<key_type, mapped_type> it = find(key);
-                //if(it != end())
-                //{
-                //    return it.second();
-                //}
-                //else
+                Iterator<key_type, mapped_type> it = find(key);
+                if(it != end())
+                {
+                    return it.second();
+                }
+                else
                 {
                     std::cout << key << std::endl;
                     throw std::out_of_range("Key is out of range");

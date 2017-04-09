@@ -63,7 +63,7 @@ namespace Linked
             ------------------------------------------------------------------*/
             ~Node()
             {
-                std::cout << "Destroying node with data: " << data << std::endl;
+
             }
 
 

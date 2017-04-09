@@ -2,68 +2,215 @@
 
 #include <linked-list.h>
 
-TEST_CASE( "Test the linked list with 0, 1, and many elements" )
+TEST_CASE( "Empty list behavior" )
 {
     const auto null_iterator = Linked::Iterator<int>(nullptr);
     Linked::List<int> list;
 
+    // Test the functions which don't alter list state
+    REQUIRE(list.empty()   == true);
+    REQUIRE(list.size()    == 0UL);
+    REQUIRE(list.begin()   == null_iterator);
+    REQUIRE(list.end()     == null_iterator);
 
-    SECTION("Empty list behavior")
+    SECTION("Test List::clear")
     {
-        REQUIRE(list.empty()   == true);
-        REQUIRE(list.size()    == 0UL);
-        REQUIRE(list.begin()   == null_iterator);
-        REQUIRE(list.end()     == null_iterator);
+        // Should do nothing
+        list.clear();
 
-        list.reverse();
-
+        // Ensure that the list remains unchanged
         REQUIRE(list.empty()   == true);
         REQUIRE(list.size()    == 0UL);
         REQUIRE(list.begin()   == null_iterator);
         REQUIRE(list.end()     == null_iterator);
     }
 
-    SECTION("List with one element")
+    SECTION("Test List::push_back")
     {
-        const auto it = list.push_back(1UL);
+        // Push back some data into the list
+        auto it_0 = list.push_back(0UL);
 
-        REQUIRE(list.empty()   == false);
-        REQUIRE(list.size()    == 1UL);
-        REQUIRE(list.begin()   == it);
+        // Ensure the list changes as expected
+        REQUIRE(list.empty() == false);
+        REQUIRE(list.size()  == 1UL);
+        REQUIRE(list.begin() == it_0);
+        REQUIRE(list.end()   == null_iterator);
+    }
+
+    SECTION("Test List::pop_back")
+    {
+        // Ensure that the function does nothing
+        REQUIRE(list.pop_back() == false);
+
+        // Ensure that the list remains unchanged
+        REQUIRE(list.empty()    == true);
+        REQUIRE(list.size()     == 0UL);
+        REQUIRE(list.begin()    == null_iterator);
+        REQUIRE(list.end()      == null_iterator);
+    }
+
+    SECTION("Test List::enqueue")
+    {
+        // Enqueue some data into the list.
+        auto it_0 = list.enqueue(0UL);
+
+        // Ensure the list changes as expected
+        REQUIRE(list.empty()    == false);
+        REQUIRE(list.size()     == 1UL);
+        REQUIRE(list.begin()    == it_0);
+        REQUIRE(list.end()      == null_iterator);
+    }
+
+    SECTION("Test List::dequeue")
+    {
+        // Ensure that the function does not succeed
+        REQUIRE(list.dequeue() == false);
+
+        // Ensure that the list remains unchanged
+        REQUIRE(list.empty()   == true);
+        REQUIRE(list.size()    == 0UL);
+        REQUIRE(list.begin()   == null_iterator);
         REQUIRE(list.end()     == null_iterator);
+    }
 
+    SECTION("Test List::remove")
+    {
+        // Ensure that the function does not succeed
+        REQUIRE(list.remove(0UL) == false);
+
+        // Ensure that the list remains unchanged
+        REQUIRE(list.empty()   == true);
+        REQUIRE(list.size()    == 0UL);
+        REQUIRE(list.begin()   == null_iterator);
+        REQUIRE(list.end()     == null_iterator);
+    }
+
+    SECTION("Test List::reverse")
+    {
+        // Reverse the list
+        list.reverse();
+
+        // Ensure that the list remains unchanged
+        REQUIRE(list.empty()   == true);
+        REQUIRE(list.size()    == 0UL);
+        REQUIRE(list.begin()   == null_iterator);
+        REQUIRE(list.end()     == null_iterator);
+    }
+}
+
+
+TEST_CASE( "Test the linked list with 1 element" )
+{
+    const auto null_iterator = Linked::Iterator<int>(nullptr);
+    Linked::List<int> list;
+
+    const auto it_0 = list.push_back(0UL);
+
+    //Test the functions which don't alter list state
+    REQUIRE(list.empty()   == false);
+    REQUIRE(list.size()    == 1UL);
+    REQUIRE(list.begin()   == it_0);
+    REQUIRE(list.end()     == null_iterator);
+
+    SECTION("Test List::clear")
+    {
+
+    }
+
+    SECTION("Test List::push_back")
+    {
+
+    }
+
+    SECTION("Test List::pop_back")
+    {
+
+    }
+
+    SECTION("Test List::enqueue")
+    {
+
+    }
+
+    SECTION("Test List::dequeue")
+    {
+
+    }
+
+    SECTION("Test List::remove")
+    {
+
+    }
+
+    SECTION("Test List::reverse")
+    {
         list.reverse();
 
         REQUIRE(list.empty()   == false);
         REQUIRE(list.size()    == 1UL);
-        REQUIRE(list.begin()   == it);
-        REQUIRE(list.end()     == null_iterator);
-    }
-
-    SECTION("List withi many elements")
-    {
-        const auto it_0 = list.push_back(0UL);
-        const auto it_1 = list.push_back(1UL);
-        const auto it_2 = list.push_back(2UL);
-
-        REQUIRE(list.empty()   == false);
-        REQUIRE(list.size()    == 3UL);
         REQUIRE(list.begin()   == it_0);
+        REQUIRE(list.end()     == null_iterator);
+    }
+}
 
+
+TEST_CASE( "Test the linked list with many elements" )
+{
+    const auto null_iterator = Linked::Iterator<int>(nullptr);
+    Linked::List<int> list;
+
+    const auto it_0 = list.push_back(0UL);
+    const auto it_1 = list.push_back(1UL);
+    const auto it_2 = list.push_back(2UL);
+
+    // Test the functions which don't alter list state
+    REQUIRE(list.empty()   == false);
+    REQUIRE(list.size()    == 3UL);
+    REQUIRE(list.begin()   == it_0);
+    REQUIRE(list.end()     == null_iterator);
+
+    SECTION("Test List::clear")
+    {
+        list.clear();
+
+        REQUIRE(list.empty() == true);
+        REQUIRE(list.size()  == 0UL);
+        REQUIRE(list.begin() == null_iterator);
+        REQUIRE(list.end()   == null_iterator);
+    }
+
+    SECTION("Test List::push_back")
+    {
+
+    }
+
+    SECTION("Test List::pop_back")
+    {
+
+    }
+
+    SECTION("Test List::enqueue")
+    {
+
+    }
+
+    SECTION("Test List::dequeue")
+    {
+
+    }
+
+    SECTION("Test List::remove")
+    {
+
+    }
+
+    SECTION("Test List::reverse")
+    {
         list.reverse();
 
         REQUIRE(list.empty()   == false);
         REQUIRE(list.size()    == 3UL);
         REQUIRE(list.begin()   != it_0);
         REQUIRE(list.begin()   == it_2);
-
-        list.clear();
-
-        REQUIRE(list.empty() == true);
-        REQUIRE(list.size()  == 0UL);
-        REQUIRE(list.begin() == null_iterator);
     }
-
-
-
 }
