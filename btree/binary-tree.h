@@ -191,7 +191,7 @@ namespace Binary
 
                     return retval
                 */
-                std::cout << value << std::endl;
+                std::cout << value.second << std::endl;
                 return Iterator<key_type, mapped_type>(nullptr);
             }
 
