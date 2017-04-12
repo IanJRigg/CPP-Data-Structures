@@ -116,8 +116,79 @@ namespace Binary
                 return !(operator==(other));
             }
 
+            /*------------------------------------------------------------------
+            Function:    operator++()
+            Arguments:   None
+            Returns:     Reference to the current object
+            Description: 
+            ------------------------------------------------------------------*/
+            self_type& operator++()
+            {
+                
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    operator++()
+            Arguments:   Integer
+            Returns:     A reference to the current state of the iterator.
+            Description: 
+            ------------------------------------------------------------------*/
+            self_type operator++(int)
+            {
+                self_type temp(ptr);
+                operator++();
+            }
+
         private:
             node_pointer ptr;
+
+            node_pointer inOrderForward(node_pointer pointer)
+            {
+                if(pointer == nullptr)
+                {
+                    return pointer;
+                }
+
+                node_pointer curr_pointer = pointer;
+
+                if(pointer->right == nullptr)
+                {
+                    node_pointer prev = curr_pointer;
+
+                    //   Advance upward until the iterator chlid is a left node
+                    while(curr_pointer != nullptr)
+                    {
+                        prev         = curr_pointer;
+                        curr_pointer = curr_pointer->head;
+
+                        if(curr_pointer->left == prev)
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    curr_pointer = curr_pointer->right;
+
+                    while(curr_pointer->left != nullptr)
+                    {
+                        curr_pointer = curr_pointer->left;
+                    }
+                }
+
+                return curr_pointer;
+            }
+
+            node_pointer inOrderBackward(node_pointer pointer)
+            {
+                node_pointer ret_ptr = nullptr;
+
+                std::cout << pointer << std::endl;
+
+                return ret_ptr;
+            }
     };
 
     template <typename K, typename V>
@@ -272,8 +343,6 @@ namespace Binary
             }
 
 
-
-
             /*------------------------------------------------------------------
             Function:    size()
             Arguments:   None
@@ -319,7 +388,18 @@ namespace Binary
             ------------------------------------------------------------------*/
             Iterator<key_type, mapped_type> front()
             {
-                return Iterator<key_type, mapped_type>(nullptr);
+                if(root == nullptr)
+                {
+                    return Iterator<key_type, mapped_type>(nullptr);
+                }
+
+                node_pointer ptr = root;
+                while(ptr->left != nullptr)
+                {
+                    ptr = ptr->left;
+                }
+
+                return Iterator<key_type, mapped_type>(ptr);
             }
 
 
@@ -338,7 +418,6 @@ namespace Binary
             node_pointer root;
 
             size_type count;
-
     };
 };
 #endif

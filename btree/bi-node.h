@@ -32,6 +32,7 @@ namespace Binary
             ------------------------------------------------------------------*/
             Node() :
                 value(),
+                head(nullptr),
                 left(nullptr),
                 right(nullptr)
             {
@@ -49,6 +50,7 @@ namespace Binary
             explicit
             Node(value_type value) :
                 value(value),
+                head(nullptr),
                 left(nullptr),
                 right(nullptr)
             {
@@ -90,6 +92,8 @@ namespace Binary
             {
                 return value;
             }
+
+            node_pointer head;
 
 
             node_pointer left;

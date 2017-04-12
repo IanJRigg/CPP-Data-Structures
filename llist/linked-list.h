@@ -151,7 +151,7 @@ namespace Linked
             self_type  operator++(int)
             {
                 self_type temp(ptr);
-                ++(*this);
+                operator++();
                 return temp;
             }
 
@@ -181,7 +181,7 @@ namespace Linked
             self_type  operator--(int)
             {
                 self_type temp(ptr);
-                --(*this);
+                operator--();
                 return temp;
             }
 
