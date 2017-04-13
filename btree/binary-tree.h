@@ -187,6 +187,17 @@ namespace Binary
 
                 std::cout << pointer << std::endl;
 
+                // If the current node has a left child
+                //   advance to the left child
+                //   Follow the right nodes until there are none
+                // If current node is the right node
+                //   go to the node's head node
+                // If no children and the is node is a left node
+                //   Advance to the first right child
+                // Else
+                //   return nullptr
+
+
                 return ret_ptr;
             }
     };
