@@ -119,45 +119,25 @@ namespace Binary
             /*------------------------------------------------------------------
             Function:    operator++()
             Arguments:   None
-            Returns:     Reference to the current object
-            Description: 
+            Returns:     Reference to the this object
+            Description: Pre-increment operator. Iterates over the tree via an
+                           in-order traversal.
             ------------------------------------------------------------------*/
             self_type& operator++()
             {
-                
-            }
-
-
-            /*------------------------------------------------------------------
-            Function:    operator++()
-            Arguments:   Integer
-            Returns:     A reference to the current state of the iterator.
-            Description: 
-            ------------------------------------------------------------------*/
-            self_type operator++(int)
-            {
-                self_type temp(ptr);
-                operator++();
-            }
-
-        private:
-            node_pointer ptr;
-
-            node_pointer inOrderForward(node_pointer pointer)
-            {
-                if(pointer == nullptr)
+                if(ptr == nullptr)
                 {
-                    return pointer;
+                    return ptr;
                 }
 
-                node_pointer curr_pointer = pointer;
+                node_pointer curr_pointer = ptr;
 
-                if(pointer->right == nullptr)
+                if(curr_pointer->right == nullptr)
                 {
                     node_pointer prev = curr_pointer;
 
-                    //   Advance upward until the iterator chlid is a left node
-                    while(curr_pointer != nullptr)
+                    // Advance to the parent of the first left child
+                    while(curr_pointer->head != nullptr)
                     {
                         prev         = curr_pointer;
                         curr_pointer = curr_pointer->head;
@@ -170,36 +150,101 @@ namespace Binary
                 }
                 else
                 {
+                    // Advance to the right child
                     curr_pointer = curr_pointer->right;
 
+                    // Follow the left node until there are none
                     while(curr_pointer->left != nullptr)
                     {
                         curr_pointer = curr_pointer->left;
                     }
                 }
 
-                return curr_pointer;
+                ptr = curr_pointer;
+                return *this;
             }
 
-            node_pointer inOrderBackward(node_pointer pointer)
+
+            /*------------------------------------------------------------------
+            Function:    operator++()
+            Arguments:   Integer
+            Returns:     A reference to the current state of the iterator.
+            Description: Post-increment operator. Iterates over the tree via an
+                           in-order traversal.
+            ------------------------------------------------------------------*/
+            self_type operator++(int)
             {
-                node_pointer ret_ptr = nullptr;
-
-                std::cout << pointer << std::endl;
-
-                // If the current node has a left child
-                //   advance to the left child
-                //   Follow the right nodes until there are none
-                // If current node is the right node
-                //   go to the node's head node
-                // If no children and the is node is a left node
-                //   Advance to the first right child
-                // Else
-                //   return nullptr
-
-
-                return ret_ptr;
+                self_type temp(ptr);
+                operator++();
+                return temp;
             }
+
+
+            /*------------------------------------------------------------------
+            Function:    operator++()
+            Arguments:   None
+            Returns:     Reference to the current object
+            Description: Pre-decrement operator. Iterates over the tree via a
+                           reverse in-order traversal
+            ------------------------------------------------------------------*/
+            self_type& operator--()
+            {
+                if(ptr == nullptr)
+                {
+                    return ptr;
+                }
+
+                node_pointer curr_pointer = ptr;
+
+                if(curr_pointer->left == nullptr)
+                {
+                    node_pointer prev = curr_pointer;
+
+                    // Advance to the parent of the first right child
+                    while(curr_pointer->head != nullptr)
+                    {
+                        prev         = curr_pointer;
+                        curr_pointer = curr_pointer->head;
+
+                        if(curr_pointer->right == prev)
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    // Advance to the left child
+                    curr_pointer = curr_pointer->left;
+
+                    // Follow the right nodes until there are none
+                    while(curr_pointer->left != nullptr)
+                    {
+                        curr_pointer = curr_pointer->right;
+                    }
+                }
+
+                ptr = curr_pointer;
+                return *this;
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    operator++()
+            Arguments:   None
+            Returns:     Reference to the current object
+            Description: Post-decrement operator. Iterates over the tree via a
+                           reverse in-order traversal
+            ------------------------------------------------------------------*/
+            self_type operator--(int)
+            {
+                self_type temp(ptr);
+                operator--();
+                return temp;
+            }
+
+        private:
+            node_pointer ptr;
     };
 
     template <typename K, typename V>
