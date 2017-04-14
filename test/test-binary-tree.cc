@@ -1,6 +1,51 @@
 #include <catch.hpp>
 #include <binary-tree.h>
 
+
+TEST_CASE( "Iterator Increment Behavior" )
+{
+    const auto null_iterator = Binary::Iterator<int, int>(nullptr);
+    Binary::Tree<int, int> tree;
+
+    tree.insert(std::pair<int, int>(5UL, 0UL));
+    tree.insert(std::pair<int, int>(2UL, 0UL));
+    tree.insert(std::pair<int, int>(4UL, 0UL));
+    tree.insert(std::pair<int, int>(3UL, 0UL));
+    tree.insert(std::pair<int, int>(0UL, 0UL));
+    tree.insert(std::pair<int, int>(1UL, 0UL));
+    tree.insert(std::pair<int, int>(9UL, 0UL));
+    tree.insert(std::pair<int, int>(6UL, 0UL));
+    tree.insert(std::pair<int, int>(7UL, 0UL));
+    tree.insert(std::pair<int, int>(8UL, 0UL));
+
+    auto prev = tree.front();
+    for(auto it = ++tree.front(); it != tree.end(); it++)
+    {
+        std::cout << (*it).first << " " << (*prev).first << std::endl;
+        REQUIRE((*it).first > (*prev).first);
+    }
+}
+
+
+TEST_CASE( "Iterator Decrement Behavior" )
+{
+    const auto null_iterator = Binary::Iterator<int, int>(nullptr);
+    Binary::Tree<int, int> tree;
+
+    tree.insert(std::pair<int, int>(5UL, 0UL));
+    tree.insert(std::pair<int, int>(2UL, 0UL));
+    tree.insert(std::pair<int, int>(4UL, 0UL));
+    tree.insert(std::pair<int, int>(3UL, 0UL));
+    tree.insert(std::pair<int, int>(0UL, 0UL));
+    tree.insert(std::pair<int, int>(1UL, 0UL));
+    tree.insert(std::pair<int, int>(9UL, 0UL));
+    tree.insert(std::pair<int, int>(6UL, 0UL));
+    tree.insert(std::pair<int, int>(7UL, 0UL));
+    tree.insert(std::pair<int, int>(8UL, 0UL));
+
+
+}
+
 TEST_CASE( "Empty Tree Behavior" )
 {
     const auto null_iterator = Binary::Iterator<int, int>(nullptr);

@@ -31,10 +31,10 @@ namespace Binary
                            and sets the pair to be empty.
             ------------------------------------------------------------------*/
             Node() :
-                value(),
                 head(nullptr),
                 left(nullptr),
-                right(nullptr)
+                right(nullptr),
+                value()
             {
 
             }
@@ -49,10 +49,10 @@ namespace Binary
             ------------------------------------------------------------------*/
             explicit
             Node(value_type value) :
-                value(value),
                 head(nullptr),
                 left(nullptr),
-                right(nullptr)
+                right(nullptr),
+                value(value)
             {
 
             }
@@ -66,7 +66,11 @@ namespace Binary
             ------------------------------------------------------------------*/
             ~Node()
             {
-                std::cout << "In the Node destructor" << std::endl;
+                std::cout << "Destructing node with: "
+                          << value.first
+                          << " "
+                          << value.second
+                          << std::endl;
             }
 
 

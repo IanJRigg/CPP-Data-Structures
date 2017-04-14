@@ -127,7 +127,7 @@ namespace Binary
             {
                 if(ptr == nullptr)
                 {
-                    return ptr;
+                    return *this;
                 }
 
                 node_pointer curr_pointer = ptr;
@@ -296,30 +296,67 @@ namespace Binary
             Returns:     An iterator pointing to the inserted element.
             Description: Inserts the provided value into the binary tree.
             ------------------------------------------------------------------*/
-            Iterator<key_type, mapped_type> insert(value_type value)
-            {    /*
-                    retval = false
-                    if curr_node
-                        if curr_node->key > key
-                            if rnode
-                                retval = insert(rnode, key, val)
-                            else
-                                rnode = new Node(key, val)
-                        else if curr_node->key < key
-                            if lnode
-                                retval = insert(lnode, key, val)
-                            else
-                                lnode = new node(key, val)
-                        else
-                            // Duplicate!!!
-                            retval = failure
-                    else
-                        retval = false
+            std::pair<Iterator<key_type, mapped_type>, bool> insert(value_type value)
+            {
+                if(empty())
+                {
+                    root = node_pointer(new Node<key_type, mapped_type>(value));
+                    ++count;
+                    return std::make_pair(Iterator<key_type, mapped_type>(root), true);
+                }
 
-                    return retval
-                */
-                std::cout << value.second << std::endl;
-                return Iterator<key_type, mapped_type>(nullptr);
+                node_pointer curr_pointer = root;
+                bool successful = true;
+
+                while(curr_pointer != nullptr)
+                {
+                    if(curr_pointer->getValue().first > value.first)
+                    {
+                        if(curr_pointer->left == nullptr)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            curr_pointer = curr_pointer->left;
+                        }
+                    }
+                    else if(curr_pointer->getValue().first < value.first)
+                    {
+                        if(curr_pointer->right == nullptr)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            curr_pointer = curr_pointer->right;
+                        }
+                    }
+                    else
+                    {
+                        successful = false;
+                        break;
+                    }
+                }
+
+                if(successful)
+                {
+                    if(curr_pointer->getValue().first > value.first)
+                    {
+                        curr_pointer->left = node_pointer(new Node<key_type, mapped_type>(value));
+                        curr_pointer = curr_pointer->left;
+                    }
+                    else
+                    {
+                        curr_pointer->right = node_pointer(new Node<key_type, mapped_type>(value));
+                        curr_pointer = curr_pointer->right;
+                    }
+                    ++count;
+                }
+
+                std::cout << "Exiting insert" << std::endl;
+
+                return std::make_pair(Iterator<key_type, mapped_type>(curr_pointer), successful);
             }
 
 
@@ -331,7 +368,8 @@ namespace Binary
             ------------------------------------------------------------------*/
             void clear()
             {
-                root = nullptr;
+                root  = nullptr;
+                count = 0UL;
             }
 
 
