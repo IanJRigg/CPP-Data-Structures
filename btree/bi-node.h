@@ -42,7 +42,7 @@ namespace Binary
 
             /*------------------------------------------------------------------
             Function:    Node()
-            Arguments:   None
+            Arguments:   A std::pair containing the key and value for the entry.
             Returns:     Nothing
             Description: Default constructor, initializes both pointers to null,
                            and sets the value memeber to the provided value.
@@ -50,6 +50,25 @@ namespace Binary
             explicit
             Node(value_type value) :
                 head(nullptr),
+                left(nullptr),
+                right(nullptr),
+                value(value)
+            {
+
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    Node()
+            Arguments:   A pointer to the entry's head node. A std::pair
+                           containing the key and value for the entry.
+            Returns:     Nothing
+            Description: Default constructor, initializes both pointers to null,
+                           and sets the value memeber to the provided value.
+            ------------------------------------------------------------------*/
+            explicit
+            Node(node_pointer head, value_type value) :
+                head(head),
                 left(nullptr),
                 right(nullptr),
                 value(value)

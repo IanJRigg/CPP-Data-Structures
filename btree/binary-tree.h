@@ -130,37 +130,45 @@ namespace Binary
                     return *this;
                 }
 
-                node_pointer curr_pointer = ptr;
+                node_pointer node = ptr;
 
-                if(curr_pointer->right == nullptr)
+                if(node->right == nullptr)
                 {
-                    node_pointer prev = curr_pointer;
+                    node_pointer prev = node;
+
+                    std::cout << "Starting at: " << node->getValue().first << std::endl;
 
                     // Advance to the parent of the first left child
-                    while(curr_pointer->head != nullptr)
+                    while(node->head != nullptr)
                     {
-                        prev         = curr_pointer;
-                        curr_pointer = curr_pointer->head;
+                        prev = node;
+                        node = node->head;
 
-                        if(curr_pointer->left == prev)
+                        if(node->left == prev)
                         {
                             break;
                         }
+                        std::cout << "Going through: " << node->getValue().first << std::endl;
                     }
                 }
                 else
                 {
+                    std::cout << "Advancing to " << node->getValue().first << std::endl;
                     // Advance to the right child
-                    curr_pointer = curr_pointer->right;
+                    node = node->right;
 
                     // Follow the left node until there are none
-                    while(curr_pointer->left != nullptr)
+                    while(node->left != nullptr)
                     {
-                        curr_pointer = curr_pointer->left;
+                        node = node->left;
                     }
                 }
 
-                ptr = curr_pointer;
+                std::cout << "Current value: " << ptr->getValue().first << std::endl;
+                std::cout << "New value: " << node->getValue().first << std::endl;
+                std::cout << std::endl;
+
+                ptr = node;
                 return *this;
             }
 
@@ -296,40 +304,46 @@ namespace Binary
             Returns:     An iterator pointing to the inserted element.
             Description: Inserts the provided value into the binary tree.
             ------------------------------------------------------------------*/
-            std::pair<Iterator<key_type, mapped_type>, bool> insert(value_type value)
+            std::pair<Iterator<key_type, mapped_type>, bool> insert(value_type entry)
             {
-                if(empty())
-                {
-                    root = node_pointer(new Node<key_type, mapped_type>(value));
-                    ++count;
-                    return std::make_pair(Iterator<key_type, mapped_type>(root), true);
-                }
-
-                node_pointer curr_pointer = root;
+                node_pointer node = root;
                 bool successful = true;
 
-                while(curr_pointer != nullptr)
+                if(empty())
                 {
-                    if(curr_pointer->getValue().first > value.first)
+                    root = node_pointer(new Node<key_type, mapped_type>(entry));
+                    ++count;
+                    return std::make_pair(Iterator<key_type, mapped_type>(node), successful);
+                }
+
+                while(node != nullptr)
+                {
+                    if(node->getValue().first > entry.first)
                     {
-                        if(curr_pointer->left == nullptr)
+                        if(node->left == nullptr)
                         {
+                            node->left = node_pointer(new Node<key_type, mapped_type>(node, entry));
+                            node = node->left;
+                            ++count;
                             break;
                         }
                         else
                         {
-                            curr_pointer = curr_pointer->left;
+                            node = node->left;
                         }
                     }
-                    else if(curr_pointer->getValue().first < value.first)
+                    else if(node->getValue().first < entry.first)
                     {
-                        if(curr_pointer->right == nullptr)
+                        if(node->right == nullptr)
                         {
+                            node->right = node_pointer(new Node<key_type, mapped_type>(node, entry));
+                            node = node->right;
+                            ++count;
                             break;
                         }
                         else
                         {
-                            curr_pointer = curr_pointer->right;
+                            node = node->right;
                         }
                     }
                     else
@@ -339,24 +353,7 @@ namespace Binary
                     }
                 }
 
-                if(successful)
-                {
-                    if(curr_pointer->getValue().first > value.first)
-                    {
-                        curr_pointer->left = node_pointer(new Node<key_type, mapped_type>(value));
-                        curr_pointer = curr_pointer->left;
-                    }
-                    else
-                    {
-                        curr_pointer->right = node_pointer(new Node<key_type, mapped_type>(value));
-                        curr_pointer = curr_pointer->right;
-                    }
-                    ++count;
-                }
-
-                std::cout << "Exiting insert" << std::endl;
-
-                return std::make_pair(Iterator<key_type, mapped_type>(curr_pointer), successful);
+                return std::make_pair(Iterator<key_type, mapped_type>(node), successful);
             }
 
 

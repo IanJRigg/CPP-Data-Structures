@@ -14,15 +14,16 @@ TEST_CASE( "Iterator Increment Behavior" )
     tree.insert(std::pair<int, int>(0UL, 0UL));
     tree.insert(std::pair<int, int>(1UL, 0UL));
     tree.insert(std::pair<int, int>(9UL, 0UL));
-    tree.insert(std::pair<int, int>(6UL, 0UL));
-    tree.insert(std::pair<int, int>(7UL, 0UL));
     tree.insert(std::pair<int, int>(8UL, 0UL));
+    tree.insert(std::pair<int, int>(7UL, 0UL));
+    tree.insert(std::pair<int, int>(6UL, 0UL));
 
     auto prev = tree.front();
     for(auto it = ++tree.front(); it != tree.end(); it++)
     {
         std::cout << (*it).first << " " << (*prev).first << std::endl;
         REQUIRE((*it).first > (*prev).first);
+        prev++;
     }
 }
 
@@ -39,9 +40,9 @@ TEST_CASE( "Iterator Decrement Behavior" )
     tree.insert(std::pair<int, int>(0UL, 0UL));
     tree.insert(std::pair<int, int>(1UL, 0UL));
     tree.insert(std::pair<int, int>(9UL, 0UL));
-    tree.insert(std::pair<int, int>(6UL, 0UL));
-    tree.insert(std::pair<int, int>(7UL, 0UL));
     tree.insert(std::pair<int, int>(8UL, 0UL));
+    tree.insert(std::pair<int, int>(7UL, 0UL));
+    tree.insert(std::pair<int, int>(6UL, 0UL));
 
 
 }
