@@ -134,26 +134,22 @@ namespace Binary
 
                 if(node->right == nullptr)
                 {
+                    // Advance to the parent of the first left child
                     node_pointer prev = node;
 
-                    std::cout << "Starting at: " << node->getValue().first << std::endl;
-
-                    // Advance to the parent of the first left child
-                    while(node->head != nullptr)
+                    while(node->left != prev)
                     {
                         prev = node;
                         node = node->head;
 
-                        if(node->left == prev)
+                        if(node == nullptr)
                         {
                             break;
                         }
-                        std::cout << "Going through: " << node->getValue().first << std::endl;
                     }
                 }
                 else
                 {
-                    std::cout << "Advancing to " << node->getValue().first << std::endl;
                     // Advance to the right child
                     node = node->right;
 
@@ -163,10 +159,6 @@ namespace Binary
                         node = node->left;
                     }
                 }
-
-                std::cout << "Current value: " << ptr->getValue().first << std::endl;
-                std::cout << "New value: " << node->getValue().first << std::endl;
-                std::cout << std::endl;
 
                 ptr = node;
                 return *this;
@@ -294,7 +286,7 @@ namespace Binary
             ------------------------------------------------------------------*/
             ~Tree()
             {
-
+                clear();
             }
 
 
@@ -365,6 +357,21 @@ namespace Binary
             ------------------------------------------------------------------*/
             void clear()
             {
+                if(root == nullptr)
+                {
+                    return;
+                }
+
+                if(root->left != nullptr)
+                {
+                    root->left->head = nullptr;
+                }
+
+                if(root->right != nullptr)
+                {
+                    root->right->head = nullptr;
+                }
+
                 root  = nullptr;
                 count = 0UL;
             }
