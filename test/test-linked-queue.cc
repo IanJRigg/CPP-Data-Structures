@@ -2,88 +2,97 @@
 
 #include <queue.h>
 
-/* TEMPLATE FOR SCOFFOLDING OUT UNIT TESTS
+TEST_CASE( "Empty queue behavior" )
+{
+    Linked::Queue<int> queue;
 
-TDD Scaffold
+    // Test the functions which don't alter queue state
+    REQUIRE(queue.empty()   == true);
+    REQUIRE(queue.size()    == 0UL);
 
-TEST_CASE( "vectors can be sized and resized", "[vector]" ) {
+    SECTION("Test Queue::enqueue")
+    {
+        // Enqueue some data into the queue
+        REQUIRE(queue.enqueue(0UL)  == true);
 
-    std::vector<int> v( 5 );
-
-    REQUIRE( v.size() == 5 );
-    REQUIRE( v.capacity() >= 5 );
-
-    SECTION( "resizing bigger changes size and capacity" ) {
-        v.resize( 10 );
-
-        REQUIRE( v.size() == 10 );
-        REQUIRE( v.capacity() >= 10 );
+        // Ensure the queue changes as expected
+        REQUIRE(queue.empty()    == false);
+        REQUIRE(queue.size()     == 1UL);
     }
-    SECTION( "resizing smaller changes size but not capacity" ) {
-        v.resize( 0 );
 
-        REQUIRE( v.size() == 0 );
-        REQUIRE( v.capacity() >= 5 );
-    }
-    SECTION( "reserving bigger changes capacity but not size" ) {
-        v.reserve( 10 );
+    SECTION("Test Queue::dequeue")
+    {
+        // Ensure that the function does not succeed
+        REQUIRE(queue.dequeue() == false);
 
-        REQUIRE( v.size() == 5 );
-        REQUIRE( v.capacity() >= 10 );
-    }
-    SECTION( "reserving smaller does not change size or capacity" ) {
-        v.reserve( 0 );
-
-        REQUIRE( v.size() == 5 );
-        REQUIRE( v.capacity() >= 5 );
+        // Ensure that the queue remains unchanged
+        REQUIRE(queue.empty()   == true);
+        REQUIRE(queue.size()    == 0UL);
     }
 }
 
 
-BDD Scaffold
+TEST_CASE( "Test the linked queue with 1 element" )
+{
+    Linked::Queue<int> queue;
 
-SCENARIO( "vectors can be sized and resized", "[vector]" ) {
+    REQUIRE(queue.enqueue(1UL)  == true);
 
-    GIVEN( "A vector with some items" ) {
-        std::vector<int> v( 5 );
+    //Test the functions which don't alter queue state
+    REQUIRE(queue.empty()   == false);
+    REQUIRE(queue.size()    == 1UL);
 
-        REQUIRE( v.size() == 5 );
-        REQUIRE( v.capacity() >= 5 );
+    SECTION("Test Queue::enqueue")
+    {
+        // Enqueue some data into the queue
+        REQUIRE(queue.enqueue(0UL)  == true);
 
-        WHEN( "the size is increased" ) {
-            v.resize( 10 );
+        // Ensure the queue changes as expected
+        REQUIRE(queue.empty()    == false);
+        REQUIRE(queue.size()     == 2UL);
+    }
 
-            THEN( "the size and capacity change" ) {
-                REQUIRE( v.size() == 10 );
-                REQUIRE( v.capacity() >= 10 );
-            }
-        }
-        WHEN( "the size is reduced" ) {
-            v.resize( 0 );
+    SECTION("Test Queue::dequeue")
+    {
+        // Ensure that the function removes an element
+        REQUIRE(queue.dequeue() == true);
 
-            THEN( "the size changes but not capacity" ) {
-                REQUIRE( v.size() == 0 );
-                REQUIRE( v.capacity() >= 5 );
-            }
-        }
-        WHEN( "more capacity is reserved" ) {
-            v.reserve( 10 );
-
-            THEN( "the capacity changes but not the size" ) {
-                REQUIRE( v.size() == 5 );
-                REQUIRE( v.capacity() >= 10 );
-            }
-        }
-        WHEN( "less capacity is reserved" ) {
-            v.reserve( 0 );
-
-            THEN( "neither size nor capacity are changed" ) {
-                REQUIRE( v.size() == 5 );
-                REQUIRE( v.capacity() >= 5 );
-            }
-        }
+        // Ensure that the queue is now empty
+        REQUIRE(queue.empty()   == true);
+        REQUIRE(queue.size()    == 0UL);
     }
 }
 
-Linked::Queue<int> queue;
-*/
+
+TEST_CASE( "Test the linked queue with many elements" )
+{
+    Linked::Queue<int> queue;
+
+    REQUIRE(queue.enqueue(1UL)  == true);
+    REQUIRE(queue.enqueue(2UL)  == true);
+    REQUIRE(queue.enqueue(3UL)  == true);
+
+    // Test the functions which don't alter queue state
+    REQUIRE(queue.empty()   == false);
+    REQUIRE(queue.size()    == 3UL);
+
+    SECTION("Test Queue::enqueue")
+    {
+        // Enqueue some data into the queue.
+        REQUIRE(queue.enqueue(3UL) == true);
+
+        // Ensure the queue changes as expected
+        REQUIRE(queue.empty()    == false);
+        REQUIRE(queue.size()     == 4UL);
+    }
+
+    SECTION("Test Queue::dequeue")
+    {
+        // Ensure that the function removes an element
+        REQUIRE(queue.dequeue() == true);
+
+        // Ensure that the queue is now empty
+        REQUIRE(queue.empty()   == false);
+        REQUIRE(queue.size()    == 2UL);
+    }
+}

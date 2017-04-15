@@ -362,15 +362,9 @@ namespace Binary
                     return;
                 }
 
-                if(root->left != nullptr)
-                {
-                    root->left->head = nullptr;
-                }
-
-                if(root->right != nullptr)
-                {
-                    root->right->head = nullptr;
-                }
+                // Iterate through the tree
+                //     Null the head members
+                // Null the root? Should then trigger a chain of deletions
 
                 root  = nullptr;
                 count = 0UL;

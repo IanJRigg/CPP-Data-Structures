@@ -23,8 +23,7 @@ namespace Linked
             Description: Constructs an instance of the linked list stack.
             ------------------------------------------------------------------*/
             Stack() :
-                list(),
-                count(0UL)
+                list()
             {
 
             }
@@ -79,7 +78,7 @@ namespace Linked
             ------------------------------------------------------------------*/
             size_type size()
             {
-                return count;
+                return list.size();
             }
 
 
@@ -91,11 +90,10 @@ namespace Linked
             ------------------------------------------------------------------*/
             bool empty()
             {
-                return (count == 0UL);
+                return list.empty();
             }
 
         private:
             List<T> list;
-            size_type count;
     };
 };

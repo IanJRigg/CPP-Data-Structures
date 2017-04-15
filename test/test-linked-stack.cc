@@ -2,88 +2,99 @@
 
 #include <stack.h>
 
-/* TEMPLATE FOR SCOFFOLDING OUT UNIT TESTS
+TEST_CASE( "Empty stack behavior" )
+{
+    Linked::Stack<int> stack;
 
-TDD Scaffold
+    // Test the functions which don't alter stack state
+    REQUIRE(stack.empty()   == true);
+    REQUIRE(stack.size()    == 0UL);
 
-TEST_CASE( "vectors can be sized and resized", "[vector]" ) {
+    SECTION("Test Stack::push")
+    {
+        // Push back some data into the stack
+        REQUIRE(stack.push(0UL) == true);
 
-    std::vector<int> v( 5 );
-
-    REQUIRE( v.size() == 5 );
-    REQUIRE( v.capacity() >= 5 );
-
-    SECTION( "resizing bigger changes size and capacity" ) {
-        v.resize( 10 );
-
-        REQUIRE( v.size() == 10 );
-        REQUIRE( v.capacity() >= 10 );
+        // Ensure the stack changes as expected
+        REQUIRE(stack.empty() == false);
+        REQUIRE(stack.size()  == 1UL);
     }
-    SECTION( "resizing smaller changes size but not capacity" ) {
-        v.resize( 0 );
 
-        REQUIRE( v.size() == 0 );
-        REQUIRE( v.capacity() >= 5 );
-    }
-    SECTION( "reserving bigger changes capacity but not size" ) {
-        v.reserve( 10 );
+    SECTION("Test Stack::pop")
+    {
+        // Ensure that the function does nothing
+        REQUIRE(stack.pop() == false);
 
-        REQUIRE( v.size() == 5 );
-        REQUIRE( v.capacity() >= 10 );
-    }
-    SECTION( "reserving smaller does not change size or capacity" ) {
-        v.reserve( 0 );
-
-        REQUIRE( v.size() == 5 );
-        REQUIRE( v.capacity() >= 5 );
+        // Ensure that the stack remains unchanged
+        REQUIRE(stack.empty()    == true);
+        REQUIRE(stack.size()     == 0UL);
     }
 }
 
 
-BDD Scaffold
+TEST_CASE( "Test the linked stack with 1 element" )
+{
+    Linked::Stack<int> stack;
 
-SCENARIO( "vectors can be sized and resized", "[vector]" ) {
+    // Push back some data into the stack
+    REQUIRE(stack.push(0UL) == true);
 
-    GIVEN( "A vector with some items" ) {
-        std::vector<int> v( 5 );
+    //Test the functions which don't alter stack state
+    REQUIRE(stack.empty()   == false);
+    REQUIRE(stack.size()    == 1UL);
 
-        REQUIRE( v.size() == 5 );
-        REQUIRE( v.capacity() >= 5 );
+    SECTION("Test Stack::push")
+    {
+        // Push back some data into the stack
+        REQUIRE(stack.push(0UL) == true);
 
-        WHEN( "the size is increased" ) {
-            v.resize( 10 );
+        // Ensure the stack changes as expected
+        REQUIRE(stack.empty() == false);
+        REQUIRE(stack.size()  == 2UL);
+    }
 
-            THEN( "the size and capacity change" ) {
-                REQUIRE( v.size() == 10 );
-                REQUIRE( v.capacity() >= 10 );
-            }
-        }
-        WHEN( "the size is reduced" ) {
-            v.resize( 0 );
+    SECTION("Test Stack::pop")
+    {
+        // Ensure that the function does nothing
+        REQUIRE(stack.pop() == true);
 
-            THEN( "the size changes but not capacity" ) {
-                REQUIRE( v.size() == 0 );
-                REQUIRE( v.capacity() >= 5 );
-            }
-        }
-        WHEN( "more capacity is reserved" ) {
-            v.reserve( 10 );
-
-            THEN( "the capacity changes but not the size" ) {
-                REQUIRE( v.size() == 5 );
-                REQUIRE( v.capacity() >= 10 );
-            }
-        }
-        WHEN( "less capacity is reserved" ) {
-            v.reserve( 0 );
-
-            THEN( "neither size nor capacity are changed" ) {
-                REQUIRE( v.size() == 5 );
-                REQUIRE( v.capacity() >= 5 );
-            }
-        }
+        // Ensure that the stack is now empty
+        REQUIRE(stack.empty()    == true);
+        REQUIRE(stack.size()     == 0UL);
     }
 }
 
-Linked::Stack<int> stack;
-*/
+
+TEST_CASE( "Test the linked stack with many elements" )
+{
+    Linked::Stack<int> stack;
+
+    // Push back some data into the stack
+    REQUIRE(stack.push(1UL) == true);
+    REQUIRE(stack.push(2UL) == true);
+    REQUIRE(stack.push(3UL) == true);
+
+    // Test the functions which don't alter stack state
+    REQUIRE(stack.empty()   == false);
+    REQUIRE(stack.size()    == 3UL);
+
+    SECTION("Test Stack::push")
+    {
+        // Push back some data into the stack
+        REQUIRE(stack.push(0UL) == true);
+
+        // Ensure the stack changes as expected
+        REQUIRE(stack.empty() == false);
+        REQUIRE(stack.size()  == 4UL);
+    }
+
+    SECTION("Test Stack::pop")
+    {
+        // Ensure that the function removes an element
+        REQUIRE(stack.pop() == true);
+
+        // Ensure that the stack is now empty
+        REQUIRE(stack.empty()    == false);
+        REQUIRE(stack.size()     == 2UL);
+    }
+}

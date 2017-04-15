@@ -275,7 +275,7 @@ namespace Linked
             {
                 node_pointer newNode(new Node<value_type>(val));
 
-                if(head.get() == nullptr)
+                if(head == nullptr)
                 {
                     head = newNode;
                 }
@@ -334,7 +334,16 @@ namespace Linked
             Iterator<value_type> enqueue(value_type val)
             {
                 node_pointer node(new Node<value_type>(val));
-                node->next = head;
+
+                if(head == nullptr)
+                {
+                    tail = node;
+                }
+                else
+                {
+                    node->next = head;
+                }
+
                 head = node;
                 ++count;
 
