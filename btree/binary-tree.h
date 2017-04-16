@@ -364,30 +364,30 @@ namespace Binary
                 }
 
                 // Breadth first search the tree
-                node_pointer curr_node = root;
+                node_pointer node;
                 Linked::Queue<node_pointer> queue;
+                queue.enqueue(root);
 
-                do
+                while(!queue.empty())
                 {
-                    if(curr_node->left != nullptr)
+                    node = queue.front();
+                    node->head = nullptr;
+
+                    if(node->left != nullptr)
                     {
-                        queue.enqueue(curr_node->left);
+                        queue.enqueue(node->left);
                     }
 
-                    if(curr_node->right != nullptr)
+                    if(node->right != nullptr)
                     {
-                        queue.enqueue(curr_node->right);
+                        queue.enqueue(node->right);
                     }
-
-                    curr_node = queue.front();
-                    curr_node->head = nullptr;
 
                     if(!queue.dequeue())
                     {
                         std::cout << "THROW AN EXCEPTION HERE!!!" << std::endl;
                     }
                 }
-                while(!queue.empty());
 
                 // Nulling the root should then trigger a chain of deletions
                 root  = nullptr;
@@ -401,9 +401,56 @@ namespace Binary
             Returns:     Nothing
             Description: Removes the node with the key held in pos.
             ------------------------------------------------------------------*/
-            void erase(Iterator<key_type, mapped_type> pos)
+            void erase(Iterator<key_type, mapped_type> entry)
             {
-                std::cout << *pos << std::endl;
+                node_pointer node = root;
+                while(node != nullptr)
+                {
+                    if(node->getValue().first < entry.first)
+                    {
+                        node = node->left;
+                    }
+                    else if(node->getValue().first > entry.first)
+                    {
+                        node = node->right;
+                    }
+                    else
+                    {
+                        node = nullptr;
+                    }
+                }
+
+                if(node == nullptr)
+                {
+                    return;
+                }
+
+                if((node->left != nullptr) && (node->right == nullptr))
+                {
+
+                }
+                else if((node->left == nullptr) && (node->right != nullptr))
+                {
+
+                }
+                else if((node->left != nullptr) && (node->right == nullptr))
+                {
+
+                }
+                else
+                {
+                    
+                }
+                /*
+                Remove conditions:
+                    Node with a one child:
+                        set child to the current node
+                    Node with both children:
+                        Find the lowest valued element in the right subtree,
+                          replace the node to be destroye with said node
+                    Node with no cildren:
+                        Remove the node
+                */
                 return;
             }
 
@@ -420,13 +467,13 @@ namespace Binary
                 node_pointer node = root;
                 while(node != nullptr)
                 {
-                    if(key < node->getValue().second)
+                    if(key < node->getValue().first)
                     {
-                        node = node.left;
+                        node = node->left;
                     }
-                    else if(node->getValue().second > key)
+                    else if(node->getValue().first > key)
                     {
-                        node = node.right;
+                        node = node->right;
                     }
                     else
                     {
@@ -444,7 +491,7 @@ namespace Binary
             Returns:     The mapped_type variable that corresponds to the key
             Description: Returns the value that is stored with the provided key
             ------------------------------------------------------------------*/
-            void at(key_type key)
+            mapped_type at(key_type key)
             {
                 Iterator<key_type, mapped_type> it = find(key);
                 if(it != end())
@@ -492,6 +539,9 @@ namespace Binary
             ------------------------------------------------------------------*/
             void balance()
             {
+                // Dump tree into an array
+                // Divide and conquer the array, performing an insertion at each
+                //   point
                 return;
             }
 

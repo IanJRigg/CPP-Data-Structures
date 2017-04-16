@@ -1,6 +1,8 @@
 #include <catch.hpp>
 #include <binary-tree.h>
 
+#include <unistd.h>
+
 
 TEST_CASE( "Iterator Increment Behavior" )
 {
@@ -21,7 +23,6 @@ TEST_CASE( "Iterator Increment Behavior" )
     auto prev = tree.front();
     for(auto it = ++tree.front(); it != tree.end(); it++)
     {
-        std::cout << (*it).first << " " << (*prev).first << std::endl;
         REQUIRE((*it).first > (*prev).first);
         prev++;
     }

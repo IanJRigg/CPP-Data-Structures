@@ -54,7 +54,7 @@ namespace Binary
                 right(nullptr),
                 value(value)
             {
-                std::cout << "Constructing a root node" << std::endl;
+
             }
 
 
@@ -85,10 +85,8 @@ namespace Binary
             ------------------------------------------------------------------*/
             ~Node()
             {
-                std::cout << "Destructing node with: "
+                std::cout << "Destructing node with key: "
                           << value.first
-                          << " "
-                          << value.second
                           << std::endl;
             }
 
