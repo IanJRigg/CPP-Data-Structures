@@ -67,6 +67,30 @@ namespace Linked
 
 
             /*------------------------------------------------------------------
+            Function:    front()
+            Arguments:   None
+            Returns:     A reference to a value type
+            Description: Returns a reference to the last data point in the stack
+            ------------------------------------------------------------------*/
+            reference front()
+            {
+                return *(list.begin());
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    end()
+            Arguments:   None
+            Returns:     A reference to a value type
+            Description: Returns a reference to the last data point in the stack
+            ------------------------------------------------------------------*/
+            reference end()
+            {
+                return *(list.end());
+            }
+
+
+            /*------------------------------------------------------------------
             Function:    size()
             Arguments:   None
             Returns:     The value contained in the count memeber variable

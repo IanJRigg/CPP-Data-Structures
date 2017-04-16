@@ -512,6 +512,30 @@ namespace Linked
                 return Iterator<value_type>(nullptr);
             }
 
+
+            /*------------------------------------------------------------------
+            Function:    rbegin()
+            Arguments:   None
+            Returns:     Returns an iterator to the tails node.
+            Description: N/A
+            ------------------------------------------------------------------*/
+            Iterator<value_type> rbegin()
+            {
+                return Iterator<value_type>(tail);
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    rend()
+            Arguments:   None
+            Returns:     An iterator to a null node.
+            Description: A null node is equivalent to the value of head->prev;
+            ------------------------------------------------------------------*/
+            Iterator<value_type> rend()
+            {
+                return Iterator<value_type>(nullptr);
+            }
+
         private:
             size_type count;
 

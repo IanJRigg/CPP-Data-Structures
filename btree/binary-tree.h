@@ -4,6 +4,7 @@
 #include <bi-node.h>
 #include <iostream>
 #include <stdexcept>
+#include <queue.h>
 
 namespace Binary
 {
@@ -357,15 +358,38 @@ namespace Binary
             ------------------------------------------------------------------*/
             void clear()
             {
-                if(root == nullptr)
+                if(empty())
                 {
                     return;
                 }
 
-                // Iterate through the tree
-                //     Null the head members
-                // Null the root? Should then trigger a chain of deletions
+                // Breadth first search the tree
+                node_pointer curr_node = root;
+                Linked::Queue<node_pointer> queue;
 
+                do
+                {
+                    if(curr_node->left != nullptr)
+                    {
+                        queue.enqueue(curr_node->left);
+                    }
+
+                    if(curr_node->right != nullptr)
+                    {
+                        queue.enqueue(curr_node->right);
+                    }
+
+                    curr_node = queue.front();
+                    curr_node->head = nullptr;
+
+                    if(!queue.dequeue())
+                    {
+                        std::cout << "THROW AN EXCEPTION HERE!!!" << std::endl;
+                    }
+                }
+                while(!queue.empty());
+
+                // Nulling the root should then trigger a chain of deletions
                 root  = nullptr;
                 count = 0UL;
             }

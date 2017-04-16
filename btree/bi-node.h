@@ -54,7 +54,7 @@ namespace Binary
                 right(nullptr),
                 value(value)
             {
-
+                std::cout << "Constructing a root node" << std::endl;
             }
 
 

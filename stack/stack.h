@@ -71,6 +71,18 @@ namespace Linked
 
 
             /*------------------------------------------------------------------
+            Function:    top()
+            Arguments:   None
+            Returns:     A reference to a value type
+            Description: Returns a reference to the last data point in the stack
+            ------------------------------------------------------------------*/
+            reference top()
+            {
+                return *(list.rend());
+            }
+
+
+            /*------------------------------------------------------------------
             Function:    size()
             Arguments:   None
             Returns:     The value contained in the count memeber variable

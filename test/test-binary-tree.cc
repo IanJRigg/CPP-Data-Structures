@@ -58,12 +58,19 @@ TEST_CASE( "Empty Tree Behavior" )
 
     SECTION("Test Tree::insert")
     {
-        auto it = tree.insert(std::pair<int, int>(0UL, 0UL));
+        //auto pair = tree.insert(std::pair<int, int>(0UL, 0UL));
+        //REQUIRE(pair.first  == tree.front());
+        //REQUIRE(pair.second == true);
     }
 
     SECTION("Test Tree::clear")
     {
         tree.clear();
+
+        REQUIRE(tree.empty() == true);
+        REQUIRE(tree.size()  == 0UL);
+        REQUIRE(tree.front() == null_iterator);
+        REQUIRE(tree.end()   == null_iterator);
     }
 
     SECTION("Test Tree::erase")
