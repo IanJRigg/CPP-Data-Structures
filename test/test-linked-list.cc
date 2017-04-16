@@ -157,8 +157,9 @@ TEST_CASE( "Test the linked list with 1 element" )
         // Ensure the list changes as expected
         REQUIRE(list.empty()    == false);
         REQUIRE(list.size()     == 2UL);
-        REQUIRE(list.begin()    == it_1);
+        REQUIRE(list.begin()    == it_0);
         REQUIRE(list.end()      == null_iterator);
+        REQUIRE(--it_1          == it_0);
     }
 
     SECTION("Test List::dequeue")
@@ -271,9 +272,9 @@ TEST_CASE( "Test the linked list with many elements" )
         // Ensure the list changes as expected
         REQUIRE(list.empty()    == false);
         REQUIRE(list.size()     == 4UL);
-        REQUIRE(list.begin()    == it_3);
+        REQUIRE(list.begin()    == it_0);
         REQUIRE(list.end()      == null_iterator);
-        REQUIRE(++(it_3)        == it_0);
+        REQUIRE(--it_3          == it_2);
     }
 
     SECTION("Test List::dequeue")

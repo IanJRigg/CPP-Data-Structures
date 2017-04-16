@@ -167,6 +167,7 @@ namespace Linked
             self_type& operator--()
             {
                 ptr = ptr->prev;
+                return *this;
             }
 
 
@@ -273,22 +274,22 @@ namespace Linked
             ------------------------------------------------------------------*/
             Iterator<value_type> push_back(value_type val)
             {
-                node_pointer newNode(new Node<value_type>(val));
+                node_pointer node(new Node<value_type>(val));
 
                 if(head == nullptr)
                 {
-                    head = newNode;
+                    head = node;
                 }
                 else
                 {
-                    tail->next    = newNode;
-                    newNode->prev = tail;
+                    tail->next = node;
+                    node->prev = tail;
                 }
 
-                tail = newNode;
-                count++;
+                tail = node;
+                ++count;
 
-                return Iterator<value_type>(newNode);
+                return Iterator<value_type>(node);
             }
 
 
@@ -337,17 +338,18 @@ namespace Linked
 
                 if(head == nullptr)
                 {
-                    tail = node;
+                    head = node;
                 }
                 else
                 {
-                    node->next = head;
+                    tail->next = node;
+                    node->prev = tail;
                 }
 
-                head = node;
+                tail = node;
                 ++count;
 
-                return begin();
+                return Iterator<value_type>(node);
             }
 
 
@@ -356,7 +358,7 @@ namespace Linked
             Arguments:   None
             Returns:     True if the list isn't empty and the operation could be
                            completed.
-            Description: Removes the node at the front of the list.
+            Description: Removes the node at the back of the list.
             ------------------------------------------------------------------*/
             bool dequeue()
             {
