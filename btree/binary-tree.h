@@ -427,19 +427,30 @@ namespace Binary
 
                 if((node->left != nullptr) && (node->right == nullptr))
                 {
-
+                    node->left->head = node->head;
+                    // node->head->left = node->left;
+                    node->head = nullptr;
                 }
                 else if((node->left == nullptr) && (node->right != nullptr))
                 {
-
+                    node->right->head = node->head;
+                    // node->head->left = node->left;
+                    node->head = nullptr;
                 }
-                else if((node->left != nullptr) && (node->right == nullptr))
+                else if((node->left != nullptr) && (node->right != nullptr))
                 {
 
                 }
                 else
                 {
-                    
+                    if(node->head->left == node)
+                    {
+                        node->head->left == nullptr;
+                    }
+                    else
+                    {
+                        node->head->right == nullptr;
+                    }
                 }
                 /*
                 Remove conditions:
