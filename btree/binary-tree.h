@@ -428,13 +428,32 @@ namespace Binary
                 if((node->left != nullptr) && (node->right == nullptr))
                 {
                     node->left->head = node->head;
-                    // node->head->left = node->left;
+
+                    // if parent's left child is equal to the current node
+                    if(node->head->left == node)
+                    {
+                        node->head->left = node->left;
+                    }
+                    else
+                    {
+                        node->head->right = node->left;
+                    }
+
                     node->head = nullptr;
                 }
                 else if((node->left == nullptr) && (node->right != nullptr))
                 {
                     node->right->head = node->head;
-                    // node->head->left = node->left;
+
+                    // if parent's left child is equal to the current node
+                    if(node->head->left == node)
+                    {
+                        node->head->left = node->right;
+                    }
+                    else
+                    {
+                        node->head->right = node->right;
+                    }
                     node->head = nullptr;
                 }
                 else if((node->left != nullptr) && (node->right != nullptr))
