@@ -31,7 +31,7 @@ TEST_CASE( "Iterator Increment Behavior" )
 
 TEST_CASE( "Iterator Decrement Behavior" )
 {
-    /*
+
     const auto null_iterator = Binary::Iterator<int, int>(nullptr);
     Binary::Tree<int, int> tree;
 
@@ -44,7 +44,14 @@ TEST_CASE( "Iterator Decrement Behavior" )
     tree.insert(std::pair<int, int>(9UL, 0UL));
     tree.insert(std::pair<int, int>(8UL, 0UL));
     tree.insert(std::pair<int, int>(7UL, 0UL));
-    tree.insert(std::pair<int, int>(6UL, 0UL));*/
+    tree.insert(std::pair<int, int>(6UL, 0UL));
+
+    auto prev = tree.front();
+    for(auto it = ++tree.back(); it != tree.rend(); it--)
+    {
+        REQUIRE((*it).first < (*prev).first);
+        prev--;
+    }
 }
 
 TEST_CASE( "Empty Tree Behavior" )

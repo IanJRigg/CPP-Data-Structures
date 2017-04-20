@@ -192,7 +192,7 @@ namespace Binary
             {
                 if(ptr == nullptr)
                 {
-                    return ptr;
+                    return *this;
                 }
 
                 node_pointer curr_pointer = ptr;
@@ -458,7 +458,7 @@ namespace Binary
                 }
                 else if((node->left != nullptr) && (node->right != nullptr))
                 {
-
+                    
                 }
                 else
                 {
@@ -606,6 +606,40 @@ namespace Binary
             Description: Returns an iterator to the past-the-end element
             ------------------------------------------------------------------*/
             Iterator<key_type, mapped_type> end()
+            {
+                return Iterator<key_type, mapped_type>(nullptr);
+            }
+
+            /*------------------------------------------------------------------
+            Function:    back()
+            Arguments:   None
+            Returns:     An iterator pointing to the right-most node.
+            Description: Returns the back of the tree.
+            ------------------------------------------------------------------*/
+            Iterator<key_type, mapped_type> back()
+            {
+                if(root == nullptr)
+                {
+                    return Iterator<key_type, mapped_type>(nullptr);
+                }
+
+                node_pointer ptr = root;
+                while(ptr->right != nullptr)
+                {
+                    ptr = ptr->right;
+                }
+
+                return Iterator<key_type, mapped_type>(ptr);
+            }
+
+
+            /*------------------------------------------------------------------
+            Function:    rend()
+            Arguments:   None
+            Returns:     An iterator pointing at past the end of the tree (NULL)
+            Description: Returns an iterator to the past-the-end element
+            ------------------------------------------------------------------*/
+            Iterator<key_type, mapped_type> rend()
             {
                 return Iterator<key_type, mapped_type>(nullptr);
             }
