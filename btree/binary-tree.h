@@ -458,7 +458,24 @@ namespace Binary
                 }
                 else if((node->left != nullptr) && (node->right != nullptr))
                 {
-                    
+                    node_pointer swap = node->right;
+
+                    while(swap != nullptr)
+                    {
+                        swap = node->left;
+                    }
+
+                    //replace node with swap
+
+                    if(node->left != nullptr)
+                    {
+                        node->left->head = swap;
+                    }
+
+                    if(node->right != nullptr)
+                    {
+                        node->right->head = swap;
+                    }
                 }
                 else
                 {
