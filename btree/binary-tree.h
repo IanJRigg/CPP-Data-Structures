@@ -403,14 +403,19 @@ namespace Binary
             ------------------------------------------------------------------*/
             void erase(Iterator<key_type, mapped_type> entry)
             {
+                if(entry == Iterator<int, int>(nullptr))
+                {
+                    return;
+                }
+
                 node_pointer node = root;
                 while(node != nullptr)
                 {
-                    if(node->getValue().first < entry.first)
+                    if(node->getValue().first < (*entry).first)
                     {
                         node = node->left;
                     }
-                    else if(node->getValue().first > entry.first)
+                    else if(node->getValue().first > (*entry).first)
                     {
                         node = node->right;
                     }
@@ -466,7 +471,6 @@ namespace Binary
                     }
 
                     //replace node with swap
-
                     if(node->left != nullptr)
                     {
                         node->left->head = swap;
@@ -476,16 +480,25 @@ namespace Binary
                     {
                         node->right->head = swap;
                     }
+
+                    if(node->head->left == node)
+                    {
+                        node->head->left = swap;
+                    }
+                    else
+                    {
+                        node->head->right = swap;
+                    }
                 }
                 else
                 {
                     if(node->head->left == node)
                     {
-                        node->head->left == nullptr;
+                        node->head->left = nullptr;
                     }
                     else
                     {
-                        node->head->right == nullptr;
+                        node->head->right = nullptr;
                     }
                 }
                 /*
@@ -528,7 +541,7 @@ namespace Binary
                     }
                 }
 
-                return end();
+                return Iterator<key_type, mapped_type>(node);
             }
 
 
@@ -543,11 +556,10 @@ namespace Binary
                 Iterator<key_type, mapped_type> it = find(key);
                 if(it != end())
                 {
-                    return it.second();
+                    return (*it).second;
                 }
                 else
                 {
-                    std::cout << key << std::endl;
                     throw std::out_of_range("Key is out of range");
                 }
             }
@@ -586,9 +598,9 @@ namespace Binary
             ------------------------------------------------------------------*/
             void balance()
             {
-                // Dump tree into an array
-                // Divide and conquer the array, performing an insertion at each
-                //   point
+                // Iterate from start to finish, storing the contents in an array
+
+                // 
                 return;
             }
 

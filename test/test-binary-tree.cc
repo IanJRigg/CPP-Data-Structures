@@ -2,6 +2,7 @@
 #include <binary-tree.h>
 
 #include <unistd.h>
+#include <stdexcept>
 
 
 TEST_CASE( "Iterator Increment Behavior" )
@@ -66,7 +67,8 @@ TEST_CASE( "Empty Tree Behavior" )
 
     SECTION("Test Tree::insert")
     {
-        //auto pair = tree.insert(std::pair<int, int>(0UL, 0UL));
+        auto pair = tree.insert(std::pair<int, int>(0UL, 0UL));
+
         //REQUIRE(pair.first  == tree.front());
         //REQUIRE(pair.second == true);
     }
@@ -83,22 +85,53 @@ TEST_CASE( "Empty Tree Behavior" )
 
     SECTION("Test Tree::erase")
     {
+        tree.erase(null_iterator);
 
+        REQUIRE(tree.empty() == true);
+        REQUIRE(tree.size()  == 0UL);
+        REQUIRE(tree.front() == null_iterator);
+        REQUIRE(tree.end()   == null_iterator);
     }
 
     SECTION("Test Tree::find")
     {
+        auto it = tree.find(0);
 
+        REQUIRE(it == null_iterator);
+
+        REQUIRE(tree.empty() == true);
+        REQUIRE(tree.size()  == 0UL);
+        REQUIRE(tree.front() == null_iterator);
+        REQUIRE(tree.end()   == null_iterator);
     }
 
     SECTION("Test Tree::at")
     {
+        bool success = false;
+        try
+        {
+            auto retval = tree.at(0);
+        }
+        catch(std::out_of_range ex)
+        {
+            //REQUIRE(ex.what().compare("Key is out of range") == 0UL);
+            success = true;
+        }
+        REQUIRE(success == true);
 
+        REQUIRE(tree.empty() == true);
+        REQUIRE(tree.size()  == 0UL);
+        REQUIRE(tree.front() == null_iterator);
+        REQUIRE(tree.end()   == null_iterator);
     }
 
     SECTION("Test Tree::balance")
     {
 
+        REQUIRE(tree.empty() == true);
+        REQUIRE(tree.size()  == 0UL);
+        REQUIRE(tree.front() == null_iterator);
+        REQUIRE(tree.end()   == null_iterator);
     }
 }
 
