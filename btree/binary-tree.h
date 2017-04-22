@@ -306,7 +306,7 @@ namespace Binary
                 {
                     root = node_pointer(new Node<key_type, mapped_type>(entry));
                     ++count;
-                    return std::make_pair(Iterator<key_type, mapped_type>(node), successful);
+                    return std::make_pair(Iterator<key_type, mapped_type>(root), successful);
                 }
 
                 while(node != nullptr)
@@ -421,7 +421,7 @@ namespace Binary
                     }
                     else
                     {
-                        node = nullptr;
+                        break;
                     }
                 }
 
@@ -492,13 +492,22 @@ namespace Binary
                 }
                 else
                 {
-                    if(node->head->left == node)
+                    // Needs to handle for the root here!
+                    if(node->head != nullptr)
                     {
-                        node->head->left = nullptr;
+                        if(node->head->left == node)
+                        {
+                            node->head->left = nullptr;
+                        }
+                        else
+                        {
+                            node->head->right = nullptr;
+                        }
                     }
                     else
                     {
-                        node->head->right = nullptr;
+                        // If the node has no head pointer, it must be root.
+                        root = nullptr;
                     }
                 }
                 /*
@@ -511,6 +520,8 @@ namespace Binary
                     Node with no cildren:
                         Remove the node
                 */
+
+                --count;
                 return;
             }
 
@@ -586,22 +597,6 @@ namespace Binary
             bool empty()
             {
                 return count == 0UL;
-            }
-
-
-            /*------------------------------------------------------------------
-            Function:    balance()
-            Arguments:   None
-            Returns:     Nothing
-            Description: Dumps the tree to a list, then recreates the tree by
-                           inserting the values of the list to the tree.
-            ------------------------------------------------------------------*/
-            void balance()
-            {
-                // Iterate from start to finish, storing the contents in an array
-
-                // 
-                return;
             }
 
 
