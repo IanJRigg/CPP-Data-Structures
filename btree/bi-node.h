@@ -81,13 +81,11 @@ namespace Binary
             Function:    ~Node()
             Arguments:   None
             Returns:     Nothing
-            Description: Default destructor.
+            Description: Destructor.
             ------------------------------------------------------------------*/
             ~Node()
             {
-                std::cout << "Destructing node with key: "
-                          << value.first
-                          << std::endl;
+
             }
 
 

@@ -58,7 +58,7 @@ namespace Binary
             Function:    ~Iterator()
             Arguments:   None
             Returns:     Nothing
-            Description: Empty destructor
+            Description: Destructor
             ------------------------------------------------------------------*/
             ~Iterator()
             {
@@ -283,7 +283,7 @@ namespace Binary
             Function:    ~Tree()
             Arguments:   None
             Returns:     Nothing
-            Description: Empty destructor
+            Description: Destructor, clears the contents of the tree.
             ------------------------------------------------------------------*/
             ~Tree()
             {
@@ -411,17 +411,17 @@ namespace Binary
                 node_pointer node = root;
                 while(node != nullptr)
                 {
-                    if(node->getValue().first < (*entry).first)
+                    if(node->getValue().first == (*entry).first)
                     {
-                        node = node->left;
+                        break;
                     }
-                    else if(node->getValue().first > (*entry).first)
+                    else if(node->getValue().first < (*entry).first)
                     {
                         node = node->right;
                     }
                     else
                     {
-                        break;
+                        node = node->left;
                     }
                 }
 
@@ -430,6 +430,7 @@ namespace Binary
                     return;
                 }
 
+                // Node with a left child only: replace current node with child
                 if((node->left != nullptr) && (node->right == nullptr))
                 {
                     node->left->head = node->head;
@@ -446,6 +447,7 @@ namespace Binary
 
                     node->head = nullptr;
                 }
+                // Node with a right child only: replace current node with child
                 else if((node->left == nullptr) && (node->right != nullptr))
                 {
                     node->right->head = node->head;
@@ -461,13 +463,16 @@ namespace Binary
                     }
                     node->head = nullptr;
                 }
+                // Node with both children
                 else if((node->left != nullptr) && (node->right != nullptr))
                 {
+                    // Find the lowest valued element in the right subtree,
+                    //   replace the node to be destroye with said node
                     node_pointer swap = node->right;
 
-                    while(swap != nullptr)
+                    while(swap->left != nullptr)
                     {
-                        swap = node->left;
+                        swap = swap->left;
                     }
 
                     //replace node with swap
@@ -481,18 +486,23 @@ namespace Binary
                         node->right->head = swap;
                     }
 
-                    if(node->head->left == node)
+                    // Handle the root here
+                    if(node->head != nullptr)
                     {
-                        node->head->left = swap;
-                    }
-                    else
-                    {
-                        node->head->right = swap;
+                        if(node->head->left == node)
+                        {
+                            node->head->left = swap;
+                        }
+                        else
+                        {
+                            node->head->right = swap;
+                        }
                     }
                 }
+                // Node with no cildren: Remove the node outright
                 else
                 {
-                    // Needs to handle for the root here!
+                    // Handle the root here
                     if(node->head != nullptr)
                     {
                         if(node->head->left == node)
@@ -510,16 +520,6 @@ namespace Binary
                         root = nullptr;
                     }
                 }
-                /*
-                Remove conditions:
-                    Node with a one child:
-                        set child to the current node
-                    Node with both children:
-                        Find the lowest valued element in the right subtree,
-                          replace the node to be destroye with said node
-                    Node with no cildren:
-                        Remove the node
-                */
 
                 --count;
                 return;
@@ -538,17 +538,17 @@ namespace Binary
                 node_pointer node = root;
                 while(node != nullptr)
                 {
+                    if(key == node->getValue().first)
+                    {
+                        break;
+                    }
                     if(key < node->getValue().first)
                     {
                         node = node->left;
                     }
-                    else if(node->getValue().first > key)
-                    {
-                        node = node->right;
-                    }
                     else
                     {
-                        break;
+                        node = node->right;
                     }
                 }
 

@@ -4,10 +4,10 @@
 #include <unistd.h>
 #include <stdexcept>
 
+const auto null_iterator = Binary::Iterator<int, int>(nullptr);
 
 TEST_CASE( "Iterator Increment Behavior" )
 {
-    const auto null_iterator = Binary::Iterator<int, int>(nullptr);
     Binary::Tree<int, int> tree;
 
     tree.insert(std::pair<int, int>(5UL, 0UL));
@@ -32,8 +32,6 @@ TEST_CASE( "Iterator Increment Behavior" )
 
 TEST_CASE( "Iterator Decrement Behavior" )
 {
-
-    const auto null_iterator = Binary::Iterator<int, int>(nullptr);
     Binary::Tree<int, int> tree;
 
     tree.insert(std::pair<int, int>(5UL, 0UL));
@@ -57,7 +55,6 @@ TEST_CASE( "Iterator Decrement Behavior" )
 
 TEST_CASE( "Empty Tree Behavior" )
 {
-    const auto null_iterator = Binary::Iterator<int, int>(nullptr);
     Binary::Tree<int, int> tree;
 
     REQUIRE(tree.empty() == true);
@@ -145,7 +142,6 @@ TEST_CASE( "Empty Tree Behavior" )
 
 TEST_CASE( "Test the list with one element" )
 {
-    const auto null_iterator = Binary::Iterator<int, int>(nullptr);
     Binary::Tree<int, int> tree;
 
     const auto pair_0 = tree.insert(std::pair<int, int>(0UL, 0UL));
@@ -229,52 +225,338 @@ TEST_CASE( "Test the list with one element" )
 
 TEST_CASE( "Test the list with many elements" )
 {
-    const auto null_iterator = Binary::Iterator<int, int>(nullptr);
-    Binary::Tree<int, int> tree;
-
-    const auto pair_1 = tree.insert(std::pair<int, int>(1UL, 0UL));
-    const auto pair_2 = tree.insert(std::pair<int, int>(2UL, 0UL));
-    const auto pair_3 = tree.insert(std::pair<int, int>(3UL, 0UL));
-
-    REQUIRE(tree.empty() == false);
-    REQUIRE(tree.size()  == 3UL);
-    REQUIRE(tree.front() == pair_1.first);
-    REQUIRE(tree.back()  == pair_3.first);
-    REQUIRE(tree.end()   == null_iterator);
-    REQUIRE(tree.rend()  == null_iterator);
-
-    SECTION("Test Tree::insert")
+    SECTION("Test on node with no children")
     {
-        auto pair_0 = tree.insert(std::pair<int, int>(0UL, 0UL));
+        Binary::Tree<int, int> tree;
 
-        REQUIRE(pair_0.first  == tree.front());
-        REQUIRE(pair_0.second == true);
+        const auto pair_2 = tree.insert(std::pair<int, int>(2UL, 0UL));
+        const auto pair_1 = tree.insert(std::pair<int, int>(1UL, 0UL));
+        const auto pair_3 = tree.insert(std::pair<int, int>(3UL, 0UL));
 
         REQUIRE(tree.empty() == false);
-        REQUIRE(tree.size()  == 4UL);
-        REQUIRE(tree.front() == pair_0.first);
+        REQUIRE(tree.size()  == 3UL);
+        REQUIRE(tree.front() == pair_1.first);
         REQUIRE(tree.back()  == pair_3.first);
         REQUIRE(tree.end()   == null_iterator);
         REQUIRE(tree.rend()  == null_iterator);
+
+        SECTION("Test Tree::insert")
+        {
+            auto pair_4 = tree.insert(std::pair<int, int>(4UL, 0UL));
+
+            // Redundant, but leaving it for consistency
+            REQUIRE(pair_4.first  == tree.back());
+            REQUIRE(pair_4.second == true);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 4UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::clear")
+        {
+            tree.clear();
+
+            REQUIRE(tree.empty() == true);
+            REQUIRE(tree.size()  == 0UL);
+            REQUIRE(tree.front() == null_iterator);
+            REQUIRE(tree.back()  == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::erase")
+        {
+            tree.erase(tree.back());
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 2UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_2.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::find")
+        {
+            auto it = tree.find(3UL);
+
+            REQUIRE(it == tree.back());
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_3.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
+
+        SECTION("Test Tree::at")
+        {
+            int value = tree.at(3UL);
+
+            REQUIRE(value == 0UL);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_3.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
     }
 
-    SECTION("Test Tree::clear")
+    SECTION("Test on node with a left child")
     {
+        Binary::Tree<int, int> tree;
+
+        const auto pair_1 = tree.insert(std::pair<int, int>(1UL, 0UL));
+        const auto pair_4 = tree.insert(std::pair<int, int>(4UL, 0UL));
+        const auto pair_2 = tree.insert(std::pair<int, int>(2UL, 0UL));
+
+        REQUIRE(tree.empty() == false);
+        REQUIRE(tree.size()  == 3UL);
+        REQUIRE(tree.front() == pair_1.first);
+        REQUIRE(tree.back()  == pair_4.first);
+        REQUIRE(tree.end()   == null_iterator);
+        REQUIRE(tree.rend()  == null_iterator);
+
+        SECTION("Test Tree::insert")
+        {
+            auto pair_5 = tree.insert(std::pair<int, int>(5UL, 0UL));
+
+            REQUIRE(pair_5.first  == tree.back());
+            REQUIRE(pair_5.second == true);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 4UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_5.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::clear")
+        {
+            tree.clear();
+
+            REQUIRE(tree.empty() == true);
+            REQUIRE(tree.size()  == 0UL);
+            REQUIRE(tree.front() == null_iterator);
+            REQUIRE(tree.back()  == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::erase")
+        {
+            tree.erase(pair_4.first);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 2UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_2.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::find")
+        {
+            auto it = tree.find(4UL);
+
+            REQUIRE(it == tree.back());
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
+
+        SECTION("Test Tree::at")
+        {
+            int value = tree.at(4UL);
+
+            REQUIRE(value == 0UL);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
 
     }
 
-    SECTION("Test Tree::erase")
+    SECTION("Test on a node with a right child")
     {
+        Binary::Tree<int, int> tree;
+
+        const auto pair_1 = tree.insert(std::pair<int, int>(1UL, 0UL));
+        const auto pair_2 = tree.insert(std::pair<int, int>(2UL, 0UL));
+        const auto pair_4 = tree.insert(std::pair<int, int>(4UL, 0UL));
+
+        REQUIRE(tree.empty() == false);
+        REQUIRE(tree.size()  == 3UL);
+        REQUIRE(tree.front() == pair_1.first);
+        REQUIRE(tree.back()  == pair_4.first);
+        REQUIRE(tree.end()   == null_iterator);
+        REQUIRE(tree.rend()  == null_iterator);
+
+        SECTION("Test Tree::insert")
+        {
+            auto pair_3 = tree.insert(std::pair<int, int>(3UL, 0UL));
+
+            REQUIRE(pair_3.first  == --(tree.back()));
+            REQUIRE(pair_3.second == true);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 4UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::clear")
+        {
+            tree.clear();
+
+            REQUIRE(tree.empty() == true);
+            REQUIRE(tree.size()  == 0UL);
+            REQUIRE(tree.front() == null_iterator);
+            REQUIRE(tree.back()  == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::erase")
+        {
+            tree.erase(pair_2.first);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 2UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::find")
+        {
+            auto it = tree.find(2UL);
+
+            REQUIRE(it == pair_2.first);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
+
+        SECTION("Test Tree::at")
+        {
+            int value = tree.at(2UL);
+
+            REQUIRE(value == 0UL);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
 
     }
 
-    SECTION("Test Tree::find")
+    SECTION("Test on a node with both chilren")
     {
+        Binary::Tree<int, int> tree;
 
-    }
+        const auto pair_2 = tree.insert(std::pair<int, int>(2UL, 0UL));
+        const auto pair_1 = tree.insert(std::pair<int, int>(1UL, 0UL));
+        const auto pair_3 = tree.insert(std::pair<int, int>(3UL, 0UL));
 
-    SECTION("Test Tree::at")
-    {
+        REQUIRE(tree.empty() == false);
+        REQUIRE(tree.size()  == 3UL);
+        REQUIRE(tree.front() == pair_1.first);
+        REQUIRE(tree.back()  == pair_3.first);
+        REQUIRE(tree.end()   == null_iterator);
+        REQUIRE(tree.rend()  == null_iterator);
 
+        SECTION("Test Tree::insert")
+        {
+            auto pair_4 = tree.insert(std::pair<int, int>(4UL, 0UL));
+
+            REQUIRE(pair_4.first  == tree.back());
+            REQUIRE(pair_4.second == true);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 4UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_4.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::clear")
+        {
+            tree.clear();
+
+            REQUIRE(tree.empty() == true);
+            REQUIRE(tree.size()  == 0UL);
+            REQUIRE(tree.front() == null_iterator);
+            REQUIRE(tree.back()  == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::erase")
+        {
+            tree.erase(pair_2.first);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 2UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_3.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.rend()  == null_iterator);
+        }
+
+        SECTION("Test Tree::find")
+        {
+            auto it = tree.find(2UL);
+
+            REQUIRE(it == pair_2.first);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_3.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
+
+        SECTION("Test Tree::at")
+        {
+            int value = tree.at(2UL);
+
+            REQUIRE(value == 0UL);
+
+            REQUIRE(tree.empty() == false);
+            REQUIRE(tree.size()  == 3UL);
+            REQUIRE(tree.front() == pair_1.first);
+            REQUIRE(tree.back()  == pair_3.first);
+            REQUIRE(tree.end()   == null_iterator);
+            REQUIRE(tree.end()   == null_iterator);
+        }
     }
 }
