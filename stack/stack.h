@@ -76,7 +76,7 @@ namespace Linked
             Returns:     A reference to a value type
             Description: Returns a reference to the last data point in the stack
             ------------------------------------------------------------------*/
-            reference top()
+            reference top() const
             {
                 return *(list.rend());
             }
@@ -88,7 +88,7 @@ namespace Linked
             Returns:     The value contained in the count memeber variable
             Description: Returns the number of elements in the stack
             ------------------------------------------------------------------*/
-            size_type size()
+            size_type size() const
             {
                 return list.size();
             }
@@ -100,7 +100,7 @@ namespace Linked
             Returns:     True if the list is empty, otherwise false.
             Description: Checks if the size member variable is equal to 0.
             ------------------------------------------------------------------*/
-            bool empty()
+            bool empty() const
             {
                 return list.empty();
             }

@@ -46,7 +46,7 @@ namespace Linked
                            and sets data to the provided value.
             ------------------------------------------------------------------*/
             explicit
-            Node(value_type val) :
+            Node(const value_type val) :
                 next(nullptr),
                 prev(nullptr),
                 data(val)
@@ -85,7 +85,7 @@ namespace Linked
             Returns:     A reference to the data member.
             Description: Returns a reference to this instance's data member.
             ------------------------------------------------------------------*/
-            reference getData()
+            reference getData() const
             {
                 return data;
             }

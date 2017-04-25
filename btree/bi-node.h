@@ -48,7 +48,7 @@ namespace Binary
                            and sets the value memeber to the provided value.
             ------------------------------------------------------------------*/
             explicit
-            Node(value_type value) :
+            Node(const value_type value) :
                 head(nullptr),
                 left(nullptr),
                 right(nullptr),
@@ -67,7 +67,7 @@ namespace Binary
                            and sets the value memeber to the provided value.
             ------------------------------------------------------------------*/
             explicit
-            Node(node_pointer head, value_type value) :
+            Node(const node_pointer head, const value_type value) :
                 head(head),
                 left(nullptr),
                 right(nullptr),
@@ -107,7 +107,7 @@ namespace Binary
             Returns:     Nothing
             Description: Returns a reference to the value member
             ------------------------------------------------------------------*/
-            reference getValue()
+            reference getValue() const
             {
                 return value;
             }

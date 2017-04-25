@@ -47,7 +47,7 @@ namespace Binary
                            pointed to by node.
             ------------------------------------------------------------------*/
             explicit
-            Iterator(node_pointer node) :
+            Iterator(const node_pointer node) :
                 ptr(node)
             {
 
@@ -297,7 +297,8 @@ namespace Binary
             Returns:     An iterator pointing to the inserted element.
             Description: Inserts the provided value into the binary tree.
             ------------------------------------------------------------------*/
-            std::pair<Iterator<key_type, mapped_type>, bool> insert(value_type entry)
+            std::pair<Iterator<key_type, mapped_type>, bool>
+            insert(const value_type entry)
             {
                 node_pointer node = root;
                 bool successful = true;
@@ -401,7 +402,7 @@ namespace Binary
             Returns:     Nothing
             Description: Removes the node with the key held in pos.
             ------------------------------------------------------------------*/
-            void erase(Iterator<key_type, mapped_type> entry)
+            void erase(const Iterator<key_type, mapped_type> entry)
             {
                 if(entry == Iterator<int, int>(nullptr))
                 {
@@ -533,7 +534,7 @@ namespace Binary
                            provided key
             Description: Empty destructor
             ------------------------------------------------------------------*/
-            Iterator<key_type, mapped_type> find(key_type key)
+            Iterator<key_type, mapped_type> find(const key_type key) const
             {
                 node_pointer node = root;
                 while(node != nullptr)
@@ -562,7 +563,7 @@ namespace Binary
             Returns:     The mapped_type variable that corresponds to the key
             Description: Returns the value that is stored with the provided key
             ------------------------------------------------------------------*/
-            mapped_type at(key_type key)
+            mapped_type at(const key_type key) const
             {
                 Iterator<key_type, mapped_type> it = find(key);
                 if(it != end())
@@ -582,7 +583,7 @@ namespace Binary
             Returns:     The contents of the count member
             Description: Returns the contents of the count member
             ------------------------------------------------------------------*/
-            size_type size()
+            size_type size() const
             {
                 return count;
             }
@@ -594,7 +595,7 @@ namespace Binary
             Returns:     True if the tree is empty, false if otherwise.
             Description: Checks if count is equal to zero.
             ------------------------------------------------------------------*/
-            bool empty()
+            bool empty() const
             {
                 return count == 0UL;
             }
@@ -606,7 +607,7 @@ namespace Binary
             Returns:     An iterator pointing to the left-most node.
             Description: Returns the front of the tree.
             ------------------------------------------------------------------*/
-            Iterator<key_type, mapped_type> front()
+            Iterator<key_type, mapped_type> front() const
             {
                 if(root == nullptr)
                 {
@@ -629,7 +630,7 @@ namespace Binary
             Returns:     An iterator pointing at past the end of the tree (NULL)
             Description: Returns an iterator to the past-the-end element
             ------------------------------------------------------------------*/
-            Iterator<key_type, mapped_type> end()
+            Iterator<key_type, mapped_type> end() const
             {
                 return Iterator<key_type, mapped_type>(nullptr);
             }
@@ -640,7 +641,7 @@ namespace Binary
             Returns:     An iterator pointing to the right-most node.
             Description: Returns the back of the tree.
             ------------------------------------------------------------------*/
-            Iterator<key_type, mapped_type> back()
+            Iterator<key_type, mapped_type> back() const
             {
                 if(root == nullptr)
                 {
@@ -663,7 +664,7 @@ namespace Binary
             Returns:     An iterator pointing at past the end of the tree (NULL)
             Description: Returns an iterator to the past-the-end element
             ------------------------------------------------------------------*/
-            Iterator<key_type, mapped_type> rend()
+            Iterator<key_type, mapped_type> rend() const
             {
                 return Iterator<key_type, mapped_type>(nullptr);
             }

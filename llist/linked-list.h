@@ -54,7 +54,7 @@ namespace Linked
                            pointed to by node.
             ------------------------------------------------------------------*/
             explicit
-            Iterator(node_pointer node) :
+            Iterator(const node_pointer node) :
                 ptr(node)
             {
 
@@ -272,7 +272,7 @@ namespace Linked
             Description: Insert a new node at the end of the list with the
                            provided value type.
             ------------------------------------------------------------------*/
-            Iterator<value_type> push_back(value_type val)
+            Iterator<value_type> push_back(const value_type val)
             {
                 node_pointer node(new Node<value_type>(val));
 
@@ -330,9 +330,9 @@ namespace Linked
             Arguments:   Value to enter into the list.
             Returns:     Iterator with the pointer of the inserted element.
             Description: Creates a node with the provided value and appends it
-                           to the front of the list.
+                           to the back of the list.
             ------------------------------------------------------------------*/
-            Iterator<value_type> enqueue(value_type val)
+            Iterator<value_type> enqueue(const value_type val)
             {
                 node_pointer node(new Node<value_type>(val));
 
@@ -393,7 +393,7 @@ namespace Linked
                            if the value is found in the list an is successfully
                            removed, or false otherwise.
             ------------------------------------------------------------------*/
-            bool remove(value_type val)
+            bool remove(const value_type val)
             {
                 bool successful = false;
 
@@ -471,7 +471,7 @@ namespace Linked
             Returns:     The contents of the count member
             Description: Returns the size of the list, as tracked by count.
             ------------------------------------------------------------------*/
-            size_type size()
+            size_type size() const
             {
                 return count;
             }
@@ -483,7 +483,7 @@ namespace Linked
             Returns:     Boolean true or false
             Description: Returns true if the list is not empty, false otherwise
             ------------------------------------------------------------------*/
-            bool empty()
+            bool empty() const
             {
                 return count == 0UL;
             }
@@ -495,7 +495,7 @@ namespace Linked
             Returns:     Returns an iterator to the head node.
             Description: N/A
             ------------------------------------------------------------------*/
-            Iterator<value_type> begin()
+            Iterator<value_type> begin() const
             {
                 return Iterator<value_type>(head);
             }
@@ -507,7 +507,7 @@ namespace Linked
             Returns:     An iterator to a null node.
             Description: A null node is equivalent to the value of tail->next;
             ------------------------------------------------------------------*/
-            Iterator<value_type> end()
+            Iterator<value_type> end() const
             {
                 return Iterator<value_type>(nullptr);
             }
@@ -519,7 +519,7 @@ namespace Linked
             Returns:     Returns an iterator to the tails node.
             Description: N/A
             ------------------------------------------------------------------*/
-            Iterator<value_type> rbegin()
+            Iterator<value_type> rbegin() const
             {
                 return Iterator<value_type>(tail);
             }
@@ -531,7 +531,7 @@ namespace Linked
             Returns:     An iterator to a null node.
             Description: A null node is equivalent to the value of head->prev;
             ------------------------------------------------------------------*/
-            Iterator<value_type> rend()
+            Iterator<value_type> rend() const
             {
                 return Iterator<value_type>(nullptr);
             }
