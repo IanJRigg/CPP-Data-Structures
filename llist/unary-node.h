@@ -1,5 +1,5 @@
-#ifndef _NODE_H_
-#define _NODE_H_
+#ifndef _UNARY_NODE_H_
+#define _UNARY_NODE_H_
 
 // STL Includes
 #include <memory>
@@ -85,7 +85,7 @@ namespace Linked
             Returns:     A reference to the data member.
             Description: Returns a reference to this instance's data member.
             ------------------------------------------------------------------*/
-            reference getData() const
+            reference getData()
             {
                 return data;
             }

@@ -1,5 +1,5 @@
-#ifndef __NODE_H__
-#define __NODE_H__
+#ifndef _BINARY_NODE_H_
+#define _BINARY_NODE_H_
 
 #include <iostream>
 
@@ -107,7 +107,7 @@ namespace Binary
             Returns:     Nothing
             Description: Returns a reference to the value member
             ------------------------------------------------------------------*/
-            reference getValue() const
+            reference getValue()
             {
                 return value;
             }

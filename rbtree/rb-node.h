@@ -5,32 +5,25 @@
 
 namespace Binary
 {
-    template<typename K, typename V>
-    class Node
+    enum Color_t
     {
-        typedef K   key_type;
-        typedef V   mapped_type;
-        typedef std::pair<key_type, mapped_type> value_type;
+        BLACK = 1UL,
+        RED   = 2UL
+    };
 
-        typedef       value_type*  pointer;
-        typedef const value_type*  const_pointer;
-        typedef       value_type&  reference;
-        typedef const value_type&  const_reference;
-        typedef size_t             size_type;
-        typedef ptrdiff_t          difference_type;
-
-        typedef std::shared_ptr<Node<key_type, mapped_type >> node_pointer;
-
+    template<typename K, typename V>
+    class RB_Node : public Node
+    {
         public:
 
             /*------------------------------------------------------------------
-            Function:    Node()
+            Function:    RB_Node()
             Arguments:   None
             Returns:     Nothing
             Description: Basic argumentless constructor. Nulls out the pointers
                            and sets the pair to be empty.
             ------------------------------------------------------------------*/
-            Node() :
+            RB_Node() :
                 head(nullptr),
                 left(nullptr),
                 right(nullptr),
@@ -41,14 +34,14 @@ namespace Binary
 
 
             /*------------------------------------------------------------------
-            Function:    Node()
+            Function:    RB_Node()
             Arguments:   A std::pair containing the key and value for the entry.
             Returns:     Nothing
             Description: Default constructor, initializes both pointers to null,
                            and sets the value memeber to the provided value.
             ------------------------------------------------------------------*/
             explicit
-            Node(const value_type value) :
+            RB_Node(const value_type value) :
                 head(nullptr),
                 left(nullptr),
                 right(nullptr),
@@ -59,7 +52,7 @@ namespace Binary
 
 
             /*------------------------------------------------------------------
-            Function:    Node()
+            Function:    RB_Node()
             Arguments:   A pointer to the entry's head node. A std::pair
                            containing the key and value for the entry.
             Returns:     Nothing
@@ -67,7 +60,7 @@ namespace Binary
                            and sets the value memeber to the provided value.
             ------------------------------------------------------------------*/
             explicit
-            Node(const node_pointer head, const value_type value) :
+            RB_Node(const node_pointer head, const value_type value) :
                 head(head),
                 left(nullptr),
                 right(nullptr),
@@ -78,48 +71,62 @@ namespace Binary
 
 
             /*------------------------------------------------------------------
-            Function:    ~Node()
+            Function:    ~RB_Node()
             Arguments:   None
             Returns:     Nothing
             Description: Destructor.
             ------------------------------------------------------------------*/
-            ~Node()
+            ~RB_Node()
             {
 
             }
 
 
             /*------------------------------------------------------------------
-            Function:    setValue()
-            Arguments:   Reference to a value_type
-            Returns:     Nothing
-            Description: Sets the member node left to the provided node.
-            ------------------------------------------------------------------*/
-            void setValue(reference data)
-            {
-                value = data;
-            }
-
-
-            /*------------------------------------------------------------------
-            Function:    getValue()
+            Function:    setColor()
             Arguments:   None
             Returns:     Nothing
-            Description: Returns a reference to the value member
+            Description: Set's the provided color, if it's RED or BLACK
             ------------------------------------------------------------------*/
-            reference getValue() const
+            void setColor(const Color_t color)
             {
-                return value;
+                switch(color)
+                {
+                    case RED:
+                    case BLACK:
+                        this->color = color;
+                        break;
+                    default:
+                        break;
+                }
             }
 
-            node_pointer head;
+
+            /*------------------------------------------------------------------
+            Function:    isBlack()
+            Arguments:   None
+            Returns:     Boolean indicating if the node is a black node
+            Description: True if color is equal to BLACK
+            ------------------------------------------------------------------*/
+            bool isBlack() const
+            {
+                return (color == BLACK);
+            }
 
 
-            node_pointer left;
-            node_pointer right;
+            /*------------------------------------------------------------------
+            Function:    isRed()
+            Arguments:   None
+            Returns:     Boolean indicating if the node is a red node
+            Description: True if color is equal to RED
+            ------------------------------------------------------------------*/
+            bool isRed() const
+            {
+                return (color == RED);
+            }
 
-        private:
-            value_type value;
+        protected:
+            Color_t color;
     };
 };
 
