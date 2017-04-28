@@ -430,7 +430,7 @@ namespace Binary
                 return Iterator<key_type, mapped_type>(nullptr);
             }
 
-        private:
+        protected:
             node_pointer root;
 
             size_type count;

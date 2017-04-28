@@ -1,7 +1,8 @@
-#ifndef __NODE_H__
-#define __NODE_H__
+#ifndef _RED_BLACK_NODE_H_
+#define _RED_BLACK_NODE_H_
 
 #include <iostream>
+#include <binary-node.h>
 
 namespace Binary
 {
@@ -12,59 +13,52 @@ namespace Binary
     };
 
     template<typename K, typename V>
-    class RB_Node : public Node
+    class Red_Black_Node : public Node<K,V>
     {
+        typedef K   key_type;
+        typedef V   mapped_type;
+        typedef std::pair<key_type, mapped_type> value_type;
+
+        typedef       value_type*  pointer;
+        typedef const value_type*  const_pointer;
+        typedef       value_type&  reference;
+        typedef const value_type&  const_reference;
+        typedef size_t             size_type;
+        typedef ptrdiff_t          difference_type;
+
+        typedef std::shared_ptr<Node<key_type, mapped_type >> node_pointer;
+
         public:
-
             /*------------------------------------------------------------------
-            Function:    RB_Node()
-            Arguments:   None
+            Function:    Red_Black_Node()
+            Arguments:   A std::pair containing the key and value for the entry
+                         The color of the node
             Returns:     Nothing
-            Description: Basic argumentless constructor. Nulls out the pointers
-                           and sets the pair to be empty.
+            Description: Default constructor, initializes both pointers to null,
+                           and sets the value memeber to the provided value.
             ------------------------------------------------------------------*/
-            RB_Node() :
-                head(nullptr),
-                left(nullptr),
-                right(nullptr),
-                value()
+            Red_Black_Node(const value_type value, Color_t color) :
+                Node<K,V>(value),
+                color(color)
             {
 
             }
 
 
             /*------------------------------------------------------------------
-            Function:    RB_Node()
-            Arguments:   A std::pair containing the key and value for the entry.
+            Function:    Red_Black_Node()
+            Arguments:   A pointer to the entry's head node.
+                         A std::pair containing the key and value for the entry
+                         The color of the node
             Returns:     Nothing
             Description: Default constructor, initializes both pointers to null,
                            and sets the value memeber to the provided value.
             ------------------------------------------------------------------*/
-            explicit
-            RB_Node(const value_type value) :
-                head(nullptr),
-                left(nullptr),
-                right(nullptr),
-                value(value)
-            {
-
-            }
-
-
-            /*------------------------------------------------------------------
-            Function:    RB_Node()
-            Arguments:   A pointer to the entry's head node. A std::pair
-                           containing the key and value for the entry.
-            Returns:     Nothing
-            Description: Default constructor, initializes both pointers to null,
-                           and sets the value memeber to the provided value.
-            ------------------------------------------------------------------*/
-            explicit
-            RB_Node(const node_pointer head, const value_type value) :
-                head(head),
-                left(nullptr),
-                right(nullptr),
-                value(value)
+            Red_Black_Node(const node_pointer head,
+                           const value_type value,
+                           Color_t color) :
+                Node<key_type, mapped_type>(head, value),
+                color(color)
             {
 
             }
@@ -76,7 +70,7 @@ namespace Binary
             Returns:     Nothing
             Description: Destructor.
             ------------------------------------------------------------------*/
-            ~RB_Node()
+            ~Red_Black_Node()
             {
 
             }
@@ -125,8 +119,24 @@ namespace Binary
                 return (color == RED);
             }
 
+
         protected:
             Color_t color;
+
+
+        private:
+            /*------------------------------------------------------------------
+            Function:    RB_Node()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Basic argumentless constructor. Nulls out the pointers,
+                           sets the pair to be empty, and sets color to black.
+                           This constructor should not ever be used.
+            ------------------------------------------------------------------*/
+            Red_Black_Node() : color(BLACK)
+            {
+
+            }
     };
 };
 

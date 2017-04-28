@@ -22,24 +22,6 @@ namespace Binary
         typedef std::shared_ptr<Node<key_type, mapped_type >> node_pointer;
 
         public:
-
-            /*------------------------------------------------------------------
-            Function:    Node()
-            Arguments:   None
-            Returns:     Nothing
-            Description: Basic argumentless constructor. Nulls out the pointers
-                           and sets the pair to be empty.
-            ------------------------------------------------------------------*/
-            Node() :
-                head(nullptr),
-                left(nullptr),
-                right(nullptr),
-                value()
-            {
-
-            }
-
-
             /*------------------------------------------------------------------
             Function:    Node()
             Arguments:   A std::pair containing the key and value for the entry.
@@ -66,7 +48,6 @@ namespace Binary
             Description: Default constructor, initializes both pointers to null,
                            and sets the value memeber to the provided value.
             ------------------------------------------------------------------*/
-            explicit
             Node(const node_pointer head, const value_type value) :
                 head(head),
                 left(nullptr),
@@ -119,6 +100,23 @@ namespace Binary
             node_pointer right;
 
         private:
+            /*------------------------------------------------------------------
+            Function:    Node()
+            Arguments:   None
+            Returns:     Nothing
+            Description: Basic argumentless constructor. Nulls out the pointers
+                           and sets the pair to be empty.
+            ------------------------------------------------------------------*/
+            Node() :
+                head(nullptr),
+                left(nullptr),
+                right(nullptr),
+                value()
+            {
+
+            }
+
+
             value_type value;
     };
 };

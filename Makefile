@@ -26,13 +26,11 @@ MAIN_INCLUDE_FLAGS := $(INCLUDE_FLAGS) \
 TEST_INCLUDE_FLAGS := $(INCLUDE_FLAGS) \
                       -I./             \
                       -I$(BTREE)       \
+                      -I$(RBTREE)      \
                       -I$(LLIST)       \
                       -I$(STACK)       \
                       -I$(QUEUE)       \
                       -I$(TEST)
-
-VPATH := $(BTREE)
-
 
 
 ################################################################################
