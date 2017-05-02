@@ -1,4 +1,4 @@
-# C++ Data Structures And Algorithm Implementations
+# C++ Data Structures Implementations
 The following repository is used for tracking various C++ Data Structures.
 
 ### Currently planned data structures:
