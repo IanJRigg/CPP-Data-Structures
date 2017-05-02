@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 const auto null_iterator = Binary::Iterator<int, int>(nullptr);
-
+/*
 TEST_CASE( "Red Black Iterator Increment Behavior" )
 {
     Binary::Red_Black_Tree<int, int> tree;
@@ -560,3 +560,4 @@ TEST_CASE( "Red Black Test the list with many elements" )
         }
     }
 }
+*/
