@@ -12,3 +12,7 @@ The following repository is used for tracking various C++ Data Structures.
     - Current inheritance solution isn't going to work, the root node of the BST is a shared pointer whose template class is the binary node, which doesn't include the color of the node. The easiest solution is to just re-use the code from the binary tree with modifications accounting for the color of the node.  This currently remains an indefinite TODO.
 
 
+
+### Build and Run Instructions:
+1. Run the command 'make'
+2. Run the command './main', this will trigger the test suite. The string "All Tests Passed" indicates a successful run.
