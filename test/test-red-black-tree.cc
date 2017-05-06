@@ -1,10 +1,10 @@
-#include <catch.hpp>
-#include <red-black-tree.h>
-
-#include <unistd.h>
-#include <stdexcept>
-
-const auto null_iterator = Binary::Iterator<int, int>(nullptr);
+//#include <catch.hpp>
+//#include <red-black-tree.h>
+//
+//#include <unistd.h>
+//#include <stdexcept>
+//
+//const auto null_iterator = Binary::Iterator<int, int>(nullptr);
 /*
 TEST_CASE( "Red Black Iterator Increment Behavior" )
 {
